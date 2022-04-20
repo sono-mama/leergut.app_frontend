@@ -1,14 +1,32 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:frontend/pages/news/news_text.dart';
 import 'package:frontend/utils/colors.dart';
 import 'package:frontend/utils/dimensions.dart';
 import 'package:frontend/widgets/app_icon.dart';
 
+import '../../utils/http/api_service.dart';
+import '../../utils/http/news_model.dart';
 import '../../widgets/big_text.dart';
 import '../../widgets/small_text.dart';
 
-class NewsDetailPage extends StatelessWidget {
+class NewsDetailPage extends StatefulWidget {
   const NewsDetailPage({Key? key}) : super(key: key);
+
+  @override
+  State<NewsDetailPage> createState() => _NewsDetailPageState();
+}
+
+class _NewsDetailPageState extends State<NewsDetailPage> {
+
+  Future<News>? futureNewsModel;
+
+  @override
+  void initState() {
+    super.initState();
+    futureNewsModel = ApiService().fetchNewsModel("/0/1");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,20 +36,28 @@ class NewsDetailPage extends StatelessWidget {
           Positioned(
               left: 0,
               right: 0,
-              child: Container(
-                width: double.maxFinite,
-                height: Dimensions.newsDetailImageHeight,
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: AssetImage(
-                      "assets/images/Rewe_logo.png"
-                    )
-                  )
-                )
-
-
-          )),
+              child: FutureBuilder<News>(
+                future: futureNewsModel,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    var img64 = snapshot.data?.content.first.image;
+                    final decodedString = base64Decode(img64!);
+                    return Container(
+                        width: double.maxFinite,
+                        height: Dimensions.newsDetailImageHeight,
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                                fit: BoxFit.cover,
+                                image: MemoryImage(decodedString)
+                            )
+                        )
+                    );
+                  } else if (snapshot.hasError) {
+                    return Text('${snapshot.error}');
+                  }
+                  return const CircularProgressIndicator();
+                },
+              )),
           Positioned(
               top: Dimensions.newsDetailIconHeightMargin,
               left: Dimensions.widthMargin,
@@ -54,29 +80,35 @@ class NewsDetailPage extends StatelessWidget {
                       topRight: Radius.circular(20)),
                   color: AppColors.textBackgroundColor
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    SmallText(text: "News", color: const Color(0x903C3C3C),),
-                    SizedBox(height: Dimensions.newsImageTextBoxSizedBoxHeight),
-                    BigText(text: "Jetzt deutschlandweit in allen Rewe-Märken"
-                        " mit der leergut.app dein Pfand abgeben und mit Guthaben bezahlen",
-                      overflow: TextOverflow.fade, maxLines: 10,
-                      size: 15, fontWeight: FontWeight.bold,),
-                    SizedBox(height: Dimensions.newsImageTextBoxSizedBoxHeight * 1.5),
-                    Expanded(
-                      child: SingleChildScrollView(
-                        child: NewsText(text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Qua tu etiam inprudens utebare non numquam. Ita redarguitur ipse a sese, convincunturque scripta eius probitate ipsius ac moribus. Qui-vere falsone, quaerere mittimus-dicitur oculis se privasse; Transfer idem ad modestiam vel temperantiam, quae est moderatio cupiditatum rationi oboediens. Duo Reges: constructio interrete. Qua tu etiam inprudens utebare non numquam."
-                            "Itaque et manendi in vita et migrandi ratio omnis iis rebus, quas supra dixi, metienda. Ex rebus enim timiditas, non ex vocabulis nascitur. Atqui reperies, inquit, in hoc quidem pertinacem; Non autem hoc: igitur ne illud quidem. Illum mallem levares, quo optimum atque humanissimum virum, Cn. Restinguet citius, si ardentem acceperit."
-                          "Itaque et manendi in vita et migrandi ratio omnis iis rebus, quas supra dixi, metienda. Ex rebus enim timiditas, non ex vocabulis nascitur. Atqui reperies, inquit, in hoc quidem pertinacem; Non autem hoc: igitur ne illud quidem. Illum mallem levares, quo optimum atque humanissimum virum, Cn. Restinguet citius, si ardentem acceperit."
-                            "Itaque et manendi in vita et migrandi ratio omnis iis rebus, quas supra dixi, metienda. Ex rebus enim timiditas, non ex vocabulis nascitur. Atqui reperies, inquit, in hoc quidem pertinacem; Non autem hoc: igitur ne illud quidem. Illum mallem levares, quo optimum atque humanissimum virum, Cn. Restinguet citius, si ardentem acceperit."
-                          "Itaque et manendi in vita et migrandi ratio omnis iis rebus, quas supra dixi, metienda. Ex rebus enim timiditas, non ex vocabulis nascitur. Atqui reperies, inquit, in hoc quidem pertinacem; Non autem hoc: igitur ne illud quidem. Illum mallem levares, quo optimum atque humanissimum virum, Cn. Restinguet citius, si ardentem acceperit."
-                        "Itaque et manendi in vita et migrandi ratio omnis iis rebus, quas supra dixi, metienda. Ex rebus enim timiditas, non ex vocabulis nascitur. Atqui reperies, inquit, in hoc quidem pertinacem; Non autem hoc: igitur ne illud quidem. Illum mallem levares, quo optimum atque humanissimum virum, Cn. Restinguet citius, si ardentem acceperit."),
-                    ),
-                    )
-                  ],
+                child: FutureBuilder<News>(
+                  future: futureNewsModel,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          SmallText(text: snapshot.data!.content.first.subHeading, color: const Color(0x903C3C3C),),
+                          SizedBox(height: Dimensions.newsImageTextBoxSizedBoxHeight),
+                          BigText(text: snapshot.data!.content.first.heading,
+                            overflow: TextOverflow.fade, maxLines: 10,
+                            size: 15, fontWeight: FontWeight.bold,),
+                          SizedBox(height: Dimensions.newsImageTextBoxSizedBoxHeight * 1.5),
+                          Expanded(
+                            child: SingleChildScrollView(
+                              child: NewsText(text: snapshot.data!.content.first.content),
+                            ),
+                          )
+                        ],
+                      );
+                    } else if (snapshot.hasError) {
+                      return Text('${snapshot.error}');
+                    }
+                    return const CircularProgressIndicator();
+                  },
                 ),
+
+
               )
 
 

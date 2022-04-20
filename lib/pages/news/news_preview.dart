@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/cupertino.dart';
 
 import '../../utils/colors.dart';
@@ -9,12 +11,12 @@ class NewsPreview extends StatelessWidget {
 
   final String type; // News, Partner, Angebot
   final String headline;
-  final String imageUrl;
+  final Uint8List imageString;
 
   const NewsPreview({Key? key,
     required this.type,
     required this.headline,
-    required this.imageUrl
+    required this.imageString
   }) : super(key: key);
 
   @override
@@ -26,6 +28,7 @@ class NewsPreview extends StatelessWidget {
             child: Align(
               alignment: Alignment.center,
               child: Container(
+                width: Dimensions.newsPreviewTextBoxWidth,
                 margin: EdgeInsets.only(
                     left: (Dimensions.newsImageHeightWidth - 10)),
                 height: Dimensions.newsImageTextBoxHeight,
@@ -66,7 +69,7 @@ class NewsPreview extends StatelessWidget {
                 color: AppColors.textBackgroundColor,
                 image: DecorationImage(
                     fit: BoxFit.cover,
-                    image: AssetImage(imageUrl))),
+                    image: MemoryImage(imageString))),
           )
         ],
       ),

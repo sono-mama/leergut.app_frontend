@@ -21,6 +21,7 @@ class Dimensions {
   static double scalingFactorNewsDetailImageHeight = 2.4;
   static double scalingFactorNewsDetailIconHeightMargin = 15.4; // 55
   static double scalingFactorNewsDetailIconSize = 52.75; // Icon 16
+  static double scalingFactorNewsPreviewTextBoxWidth = 1.3; // 300
 
   static double scalingFactorHeightMargin15 = 56.3;
   static double scalingFactorWidthMargin20 = 42.5; // 20
@@ -52,6 +53,7 @@ class Dimensions {
   static double newsDetailImageHeight = screenHeight / scalingFactorNewsDetailImageHeight;
   static double newsDetailIconHeightMargin = screenHeight / scalingFactorNewsDetailIconHeightMargin;
   static double newsDetailIconSize = screenHeight / scalingFactorNewsDetailIconSize;
+  static double newsPreviewTextBoxWidth = screenWidth / scalingFactorNewsPreviewTextBoxWidth;
 
   static double heightMargin15 = screenHeight / scalingFactorHeightMargin15;
   static double widthMargin20 = screenHeight / scalingFactorWidthMargin20;
