@@ -58,39 +58,6 @@ class _SignUpPageState extends State<SignUpPage> {
                   ],
                 )),
             Align(
-                alignment: Alignment.center,
-                child: Container(
-                  height: Dimensions.signUpPageTextFieldHeight,
-                  decoration: BoxDecoration(
-                      color: AppColors.textBackgroundColor,
-                      borderRadius: BorderRadius.circular(15),
-                      boxShadow: [
-                        BoxShadow(
-                            blurRadius: 10,
-                            spreadRadius: 7,
-                            offset: const Offset(1, 1),
-                            color: Colors.grey.withOpacity(0.2))
-                      ]),
-                  margin: EdgeInsets.only(
-                      top: Dimensions.heightMargin50,
-                      left: Dimensions.widthMargin30,
-                      right: Dimensions.widthMargin30),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 18, vertical: 4),
-                  child: DropdownButtonHideUnderline(
-                    child: DropdownButton<String>(
-                        value: value,
-                        iconSize: 28,
-                        icon: Icon(Icons.arrow_drop_down,
-                            color: AppColors.textColor),
-                        isExpanded: true,
-                        hint: const Text("Anrede"),
-                        items: genderChoice.map(buildMenuItem).toList(),
-                        onChanged: (value) =>
-                            setState(() => this.value = value)),
-                  ),
-                )),
-            Align(
               alignment: Alignment.center,
               child: Container(
                 height: Dimensions.signUpPageTextFieldHeight,
@@ -112,16 +79,16 @@ class _SignUpPageState extends State<SignUpPage> {
                   cursorColor: AppColors.secondaryColor,
                   decoration: InputDecoration(
                       contentPadding:
-                          EdgeInsets.only(left: Dimensions.widthMargin20),
+                      EdgeInsets.only(left: Dimensions.widthMargin20),
                       hintText: "Nachname",
                       enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(15),
                           borderSide:
-                              BorderSide(color: AppColors.textBackgroundColor)),
+                          BorderSide(color: AppColors.textBackgroundColor)),
                       focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(15),
                           borderSide:
-                              BorderSide(color: AppColors.textBackgroundColor)),
+                          BorderSide(color: AppColors.textBackgroundColor)),
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(15))),
                 ),
@@ -225,6 +192,43 @@ class _SignUpPageState extends State<SignUpPage> {
                   cursorColor: AppColors.secondaryColor,
                   decoration: InputDecoration(
                       contentPadding:
+                      EdgeInsets.only(left: Dimensions.widthMargin20),
+                      hintText: "Benutzername",
+                      enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                          borderSide:
+                          BorderSide(color: AppColors.textBackgroundColor)),
+                      focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                          borderSide:
+                          BorderSide(color: AppColors.textBackgroundColor)),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15))),
+                ),
+              ),
+            ),
+            Align(
+              alignment: Alignment.center,
+              child: Container(
+                height: Dimensions.signUpPageTextFieldHeight,
+                decoration: BoxDecoration(
+                    color: AppColors.textBackgroundColor,
+                    borderRadius: BorderRadius.circular(15),
+                    boxShadow: [
+                      BoxShadow(
+                          blurRadius: 10,
+                          spreadRadius: 7,
+                          offset: const Offset(1, 1),
+                          color: Colors.grey.withOpacity(0.2))
+                    ]),
+                margin: EdgeInsets.only(
+                    top: Dimensions.heightMargin15,
+                    left: Dimensions.widthMargin30,
+                    right: Dimensions.widthMargin30),
+                child: TextFormField(
+                  cursorColor: AppColors.secondaryColor,
+                  decoration: InputDecoration(
+                      contentPadding:
                           EdgeInsets.only(left: Dimensions.widthMargin20),
                       hintText: "E-Mail-Adresse",
                       enabledBorder: OutlineInputBorder(
@@ -273,6 +277,44 @@ class _SignUpPageState extends State<SignUpPage> {
                           borderRadius: BorderRadius.circular(15),
                           borderSide:
                               BorderSide(color: AppColors.textBackgroundColor)),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15))),
+                ),
+              ),
+            ),
+            Align(
+              alignment: Alignment.center,
+              child: Container(
+                height: Dimensions.signUpPageTextFieldHeight,
+                decoration: BoxDecoration(
+                    color: AppColors.textBackgroundColor,
+                    borderRadius: BorderRadius.circular(15),
+                    boxShadow: [
+                      BoxShadow(
+                          blurRadius: 10,
+                          spreadRadius: 7,
+                          offset: const Offset(1, 1),
+                          color: Colors.grey.withOpacity(0.2))
+                    ]),
+                margin: EdgeInsets.only(
+                    top: Dimensions.heightMargin15,
+                    left: Dimensions.widthMargin30,
+                    right: Dimensions.widthMargin30),
+                child: TextFormField(
+                  obscureText: true,
+                  cursorColor: AppColors.secondaryColor,
+                  decoration: InputDecoration(
+                      contentPadding:
+                      EdgeInsets.only(left: Dimensions.widthMargin20),
+                      hintText: "Passwort bestätigen",
+                      enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                          borderSide:
+                          BorderSide(color: AppColors.textBackgroundColor)),
+                      focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(15),
+                          borderSide:
+                          BorderSide(color: AppColors.textBackgroundColor)),
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(15))),
                 ),
