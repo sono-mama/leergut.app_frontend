@@ -23,16 +23,22 @@ class Dimensions {
   static double scalingFactorNewsDetailIconSize = 52.75; // Icon 16
   static double scalingFactorNewsPreviewTextBoxWidth = 1.3; // 300
 
+  static double scalingFactorHeightMargin5 = 168.8;
   static double scalingFactorHeightMargin15 = 56.3;
   static double scalingFactorWidthMargin20 = 42.5; // 20
   static double scalingFactorHeightMargin20 = 19.5; // 20
   static double scalingFactorWidthMargin30 = 13; // 30
   static double scalingFactorHeightMargin50 = 16.9;
+  static double scalingFactorHeightMargin30 = 28.13;
 
   static double scalingFactorSignUpTopMargin = 10; // 84
   static double scalingFactorSignUpTextFieldHeight = 16.9; // 50
   static double scalingFactorLoginButtonHeight = 14; // 60
   static double scalingFactorLoginButtonWidth = 1.95; // 20
+
+  static double scalingFactorDepositPreviewHeight = 9.4; // 90
+  static double scalingFactorDepositPreviewWidth = 1.95; // 200
+
 
 
 
@@ -55,10 +61,12 @@ class Dimensions {
   static double newsDetailIconSize = screenHeight / scalingFactorNewsDetailIconSize;
   static double newsPreviewTextBoxWidth = screenWidth / scalingFactorNewsPreviewTextBoxWidth;
 
+  static double heightMargin5 = screenHeight / scalingFactorHeightMargin5;
   static double heightMargin15 = screenHeight / scalingFactorHeightMargin15;
   static double widthMargin20 = screenHeight / scalingFactorWidthMargin20;
   static double widthMargin30 = screenWidth / scalingFactorWidthMargin30;
   static double heightMargin20 = screenWidth / scalingFactorHeightMargin20;
+  static double heightMargin30 = screenHeight / scalingFactorHeightMargin30;
   static double heightMargin50 = screenHeight / scalingFactorHeightMargin50;
 
   static double signUpPageTopMargin = screenHeight / scalingFactorSignUpTopMargin;
@@ -66,5 +74,7 @@ class Dimensions {
   static double loginButtonHeight = screenHeight / scalingFactorLoginButtonHeight;
   static double loginButtonWidth = screenWidth / scalingFactorLoginButtonWidth;
 
+  static double depositPreviewHeight = screenHeight / scalingFactorDepositPreviewHeight;
+  static double depositPreviewWidth = screenWidth / scalingFactorDepositPreviewWidth;
 
 }
