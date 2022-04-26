@@ -16,10 +16,10 @@ class NewsSlider extends StatefulWidget {
 class _NewsSliderState extends State<NewsSlider> {
   PageController pageController = PageController(viewportFraction: 0.9);
   var _currPageValue = 0.0;
-  double _scaleFactor = 0.8;
-  double _totalHeight = Dimensions.pageViewContainer;
-  double _textBoxHeight = Dimensions.pageViewTextContainer;
-  int _numOfPages = 4;
+  final double _scaleFactor = 0.8;
+  final double _totalHeight = Dimensions.pageViewContainer;
+  final double _textBoxHeight = Dimensions.pageViewTextContainer;
+  final int _numOfPages = 4;
 
 
   @override
@@ -35,6 +35,7 @@ class _NewsSliderState extends State<NewsSlider> {
   @override
   void dispose() {
     pageController.dispose();
+    super.dispose();
   }
 
   @override
@@ -98,7 +99,7 @@ class _NewsSliderState extends State<NewsSlider> {
         children: [
           Container(
             height: _totalHeight,
-            margin: EdgeInsets.only(left: 10, right: 10),
+            margin: const EdgeInsets.only(left: 10, right: 10),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(30),
                 color: AppColors.secondaryColor,
@@ -107,15 +108,15 @@ class _NewsSliderState extends State<NewsSlider> {
                     colorFilter:
                     ColorFilter.mode(Colors.black.withOpacity(0.85),
                         BlendMode.dstATop),
-                    image: AssetImage("assets/images/aldi.jpg"))),
+                    image: const AssetImage("assets/images/aldi.jpg"))),
           ),
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
                 height: _textBoxHeight,
-                margin: EdgeInsets.only(left: 30, right: 30, bottom: 10),
+                margin: const EdgeInsets.only(left: 30, right: 30, bottom: 10),
                 child: Container(
-                    padding: EdgeInsets.only(left: 5, right: 5),
+                    padding: const EdgeInsets.only(left: 5, right: 5),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.end,
                       crossAxisAlignment: CrossAxisAlignment.stretch,

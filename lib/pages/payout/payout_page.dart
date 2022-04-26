@@ -5,9 +5,11 @@ import 'package:frontend/pages/payout/deposit_preview.dart';
 import '../../utils/colors.dart';
 import '../../utils/dimensions.dart';
 import '../../widgets/big_text.dart';
+import '../../widgets/bottom_navbar.dart';
 
 class PayoutPage extends StatefulWidget {
   const PayoutPage({Key? key}) : super(key: key);
+
 
   @override
   State<PayoutPage> createState() => _PayoutPageState();
@@ -108,22 +110,7 @@ class _PayoutPageState extends State<PayoutPage> {
               ),
             ),
            ],
-        ),
-        bottomNavigationBar: CupertinoTabBar(
-          backgroundColor: AppColors.secondaryColor,
-          inactiveColor: AppColors.textColor,
-          activeColor: AppColors.textBackgroundColor,
-          items: const [
-            BottomNavigationBarItem(
-                icon: Icon(CupertinoIcons.home), label: "Start"),
-            BottomNavigationBarItem(
-                icon: Icon(CupertinoIcons.qrcode_viewfinder), label: "QR-Code"),
-            BottomNavigationBarItem(
-                icon: Icon(CupertinoIcons.money_euro_circle),
-                label: "Auszahlen"),
-            BottomNavigationBarItem(
-                icon: Icon(CupertinoIcons.person_crop_circle), label: "Profil")
-          ],
-        ));
+        )
+      );
   }
 }

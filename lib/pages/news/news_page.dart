@@ -6,6 +6,7 @@ import 'package:frontend/pages/news/news_detail.dart';
 import 'package:frontend/pages/news/news_preview.dart';
 import 'package:frontend/utils/http/api_service.dart';
 import 'package:frontend/utils/http/news_model.dart';
+import 'package:frontend/widgets/bottom_navbar.dart';
 
 import '../../utils/colors.dart';
 import '../../utils/dimensions.dart';
@@ -20,98 +21,87 @@ class NewsPage extends StatefulWidget {
 
 class _NewsPageState extends State<NewsPage> {
   Future<News>? futureNewsModel;
+  final ScrollController _controller = ScrollController();
 
   @override
   void initState() {
     super.initState();
-    futureNewsModel = ApiService().fetchNewsModel("/0/1");
+    futureNewsModel = ApiService().fetchNewsModel("/0/10");
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Column(
-          children: [
-            Container(
-                margin: EdgeInsets.only(
-                    top: Dimensions.headlineTopMargin, bottom: 15),
-                padding: const EdgeInsets.only(left: 20, right: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      children: [
-                        BigText(
-                            text: "News & Angebote",
-                            color: AppColors.textColor,
-                            size: 30,
-                            fontWeight: FontWeight.bold)
-                      ],
-                    ),
-                  ],
-                )),
-            Flexible(
-              child: CupertinoScrollbar(
-                isAlwaysShown: true,
-                child: ListView.builder(
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  itemCount: 10,
-                  itemBuilder: (context, index) {
-                    return InkWell(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const NewsDetailPage()));
-                      },
-                      child: Container(
-                        margin: EdgeInsets.only(
-                            left: Dimensions.widthMargin,
-                            right: Dimensions.widthMargin,
-                            bottom: Dimensions.heightMargin),
-                        child: Row(
-                          children: [
-                            FutureBuilder<News>(
-                              future: futureNewsModel,
-                              builder: (context, snapshot) {
-                                if (snapshot.hasData) {
-                                  var img64 = snapshot.data?.content.first.image;
-                                  final decodedString = base64Decode(img64!);
-                                  return NewsPreview(
-                                      type: snapshot.data!.content.first.subHeading,
-                                      headline: snapshot.data!.content.first.heading,
-                                      imageString: decodedString);
-                                } else if (snapshot.hasError) {
-                                  return Text('${snapshot.error}');
-                                }
-                                return const CircularProgressIndicator();
+        body: Column(children: [
+          Container(
+              margin: EdgeInsets.only(
+                  top: Dimensions.headlineTopMargin, bottom: 15),
+              padding: const EdgeInsets.only(left: 20, right: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    children: [
+                      BigText(
+                          text: "News & Angebote",
+                          color: AppColors.textColor,
+                          size: 30,
+                          fontWeight: FontWeight.bold)
+                    ],
+                  ),
+                ],
+              )),
+          Flexible(
+            child: FutureBuilder<News>(
+                  future: futureNewsModel,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return CupertinoScrollbar(
+                        controller: _controller,
+                        isAlwaysShown: true,
+                        child: ListView.builder(
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          controller: _controller,
+                          itemCount: snapshot.data!.numberOfElements,
+                          itemBuilder: (context, index) {
+                            return InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const NewsDetailPage()));
                               },
-                            ),
-                          ],
+                              child: Container(
+                                margin: EdgeInsets.only(
+                                    left: Dimensions.widthMargin,
+                                    right: Dimensions.widthMargin,
+                                    bottom: Dimensions.heightMargin),
+                                child: Row(
+                                  children: [
+                                    NewsPreview(
+                                        type: snapshot
+                                            .data!.content[index].subHeading,
+                                        headline:
+                                            snapshot.data!.content[index].heading,
+                                        imageString: base64Decode(
+                                            snapshot.data!.content[index].image))
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
                         ),
-                      ),
-                    );
+                      );
+                    } else if (snapshot.hasError) {
+                      return Text('${snapshot.error}');
+                    }
+                    return const CircularProgressIndicator();
                   },
-                ),
-              ),
-            )
-          ],
-        ),
-        bottomNavigationBar: CupertinoTabBar(
-          backgroundColor: AppColors.secondaryColor,
-          inactiveColor: AppColors.textColor,
-          activeColor: AppColors.textBackgroundColor,
-          items: const [
-            BottomNavigationBarItem(
-                icon: Icon(CupertinoIcons.home), label: "Start"),
-            BottomNavigationBarItem(
-                icon: Icon(CupertinoIcons.qrcode_viewfinder), label: "QR-Code"),
-            BottomNavigationBarItem(
-                icon: Icon(CupertinoIcons.money_euro_circle),
-                label: "Auszahlen"),
-            BottomNavigationBarItem(
-                icon: Icon(CupertinoIcons.person_crop_circle), label: "Profil")
-          ],
-        ));
+                )),
+        ]),
+
+
+    );
   }
 }

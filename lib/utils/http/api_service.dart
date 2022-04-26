@@ -12,10 +12,10 @@ Future<News> fetchNewsModel(String pagination) async {
   final response = await http.get(
       Uri.parse(ApiConstants.devUrl + ApiConstants.newsEndpoint + pagination),
       headers: {
-        HttpHeaders.authorizationHeader: 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiVVNFUiIsInN1YiI6InRlc3RuYW1lNSIsImlhdCI6MTY1MDQ0NjYwOSwiZXhwIjoxNjUwNDc1NDA5fQ.flTwyBC_gT65wPsji5UbxKKaaE1ElYFZi-qNvacWKEpJFCFEU4eDYURZyThQ4JHyl5URRuuPsFwiAaETaz0TnQ'
+        HttpHeaders.authorizationHeader: 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiVVNFUiIsInN1YiI6InRlc3RuYW1lNSIsImlhdCI6MTY1MDgyNjUzMywiZXhwIjoxNjUwODU1MzMzfQ.fVbnaoqhzSms00hfcOPCF_trMvgi2JN8axnsZ6RD3fILXenzYaAJ9nVGTCaa_Yiogk4ZU1FUW_9nSAKFNBG3Rg'
       });
 
-  //print(response.body);
+  print(response.body);
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,
     // then parse the JSON.

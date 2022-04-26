@@ -5,6 +5,7 @@ import 'package:frontend/utils/dimensions.dart';
 import 'package:frontend/widgets/big_text.dart';
 
 import '../../utils/colors.dart';
+import '../../widgets/bottom_navbar.dart';
 
 
 class HomePage extends StatefulWidget {
@@ -83,30 +84,6 @@ class _HomePageState extends State<HomePage> {
               )
           ),
           const NewsSlider()
-        ],
-      ),
-      bottomNavigationBar: CupertinoTabBar(
-        backgroundColor: AppColors.secondaryColor,
-        inactiveColor: AppColors.textColor,
-        activeColor: AppColors.textBackgroundColor,
-        onTap: onTapNav,
-        items: const [
-           BottomNavigationBarItem(
-               icon: Icon(CupertinoIcons.home),
-             label: "Start"
-           ),
-          BottomNavigationBarItem(
-              icon: Icon(CupertinoIcons.qrcode_viewfinder),
-              label: "QR-Code"
-          ),
-          BottomNavigationBarItem(
-              icon: Icon(CupertinoIcons.money_euro_circle),
-              label: "Auszahlen"
-          ),
-          BottomNavigationBarItem(
-              icon: Icon(CupertinoIcons.person_crop_circle),
-              label: "Profil"
-          )
         ],
       )
     );

@@ -72,7 +72,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           color: Colors.grey.withOpacity(0.2))
                     ]),
                 margin: EdgeInsets.only(
-                    top: Dimensions.heightMargin15,
+                    top: Dimensions.heightMargin50,
                     left: Dimensions.widthMargin30,
                     right: Dimensions.widthMargin30),
                 child: TextFormField(
@@ -131,7 +131,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
               ),
             ),
-            Align(
+            /*Align(
               alignment: Alignment.center,
               child: Container(
                 height: Dimensions.signUpPageTextFieldHeight,
@@ -169,7 +169,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           borderRadius: BorderRadius.circular(15))),
                 ),
               ),
-            ),
+            ),*/
             Align(
               alignment: Alignment.center,
               child: Container(

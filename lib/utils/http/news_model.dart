@@ -19,7 +19,7 @@ class News {
     required this.size,
     required this.number,
     required this.sort,
-    required this.numberOfElements,
+    required this.numberOfElements, // how many news
     required this.first,
     required this.empty,
   });
