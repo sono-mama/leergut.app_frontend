@@ -7,6 +7,7 @@ import 'package:frontend/pages/news/news_detail.dart';
 import 'package:frontend/pages/news/news_page.dart';
 import 'package:frontend/pages/payout/deposit_preview.dart';
 import 'package:frontend/pages/payout/payout_page.dart';
+import 'package:frontend/pages/qrcode/qrcode_page.dart';
 import 'package:frontend/utils/colors.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 
@@ -25,10 +26,10 @@ class _MyAppState extends State<MyApp> {
   int _currentIndex = 0;
 
   final List _children = [
-    HomePage(),
-    HomePage(),
-    PayoutPage(),
-    NewsPage()
+    const HomePage(),
+    const QrCodePage(),
+    const PayoutPage(),
+    const NewsPage()
   ];
 
   void onTabTapped(int index) {

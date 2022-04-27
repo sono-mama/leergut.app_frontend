@@ -70,7 +70,12 @@ class _NewsPageState extends State<NewsPage> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>
-                                            const NewsDetailPage()));
+                                            NewsDetailPage(
+                                              heading: snapshot.data!.content[index].heading,
+                                              subheading: snapshot.data!.content[index].subHeading,
+                                                text: snapshot.data!.content[index].content,
+                                                imageString: base64Decode(snapshot.data!.content[index].image)
+                                            )));
                               },
                               child: Container(
                                 margin: EdgeInsets.only(

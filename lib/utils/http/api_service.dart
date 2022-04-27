@@ -12,7 +12,7 @@ Future<News> fetchNewsModel(String pagination) async {
   final response = await http.get(
       Uri.parse(ApiConstants.devUrl + ApiConstants.newsEndpoint + pagination),
       headers: {
-        HttpHeaders.authorizationHeader: 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiVVNFUiIsInN1YiI6InRlc3RuYW1lNSIsImlhdCI6MTY1MDgyNjUzMywiZXhwIjoxNjUwODU1MzMzfQ.fVbnaoqhzSms00hfcOPCF_trMvgi2JN8axnsZ6RD3fILXenzYaAJ9nVGTCaa_Yiogk4ZU1FUW_9nSAKFNBG3Rg'
+        HttpHeaders.authorizationHeader: 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiVVNFUiIsInN1YiI6InRlc3RuYW1lNSIsImlhdCI6MTY1MTA0NDA3OCwiZXhwIjoxNjUxMDcyODc4fQ.jt27qIXeCjPnM_NuKJXe22535cwFfzhPfgVjSvsRznFMWmqbArWKFdSzCIIFliondwHcsO-O3HcaE-xBROPsEw'
       });
 
   print(response.body);

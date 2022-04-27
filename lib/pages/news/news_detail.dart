@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:frontend/pages/news/news_text.dart';
@@ -12,7 +13,16 @@ import '../../widgets/big_text.dart';
 import '../../widgets/small_text.dart';
 
 class NewsDetailPage extends StatefulWidget {
-  const NewsDetailPage({Key? key}) : super(key: key);
+  final String subheading;
+  final String heading;
+  final String text;
+  final Uint8List imageString;
+
+  const NewsDetailPage({Key? key,
+    required this.subheading,
+    required this.heading,
+    required this.text,
+    required this.imageString}) : super(key: key);
 
   @override
   State<NewsDetailPage> createState() => _NewsDetailPageState();
@@ -20,12 +30,10 @@ class NewsDetailPage extends StatefulWidget {
 
 class _NewsDetailPageState extends State<NewsDetailPage> {
 
-  Future<News>? futureNewsModel;
 
   @override
   void initState() {
     super.initState();
-    futureNewsModel = ApiService().fetchNewsModel("/0/1");
   }
 
   @override
@@ -36,28 +44,16 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
           Positioned(
               left: 0,
               right: 0,
-              child: FutureBuilder<News>(
-                future: futureNewsModel,
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    var img64 = snapshot.data?.content.first.image;
-                    final decodedString = base64Decode(img64!);
-                    return Container(
+              child: Container(
                         width: double.maxFinite,
                         height: Dimensions.newsDetailImageHeight,
                         decoration: BoxDecoration(
                             image: DecorationImage(
                                 fit: BoxFit.cover,
-                                image: MemoryImage(decodedString)
+                                image: MemoryImage(widget.imageString)
                             )
                         )
-                    );
-                  } else if (snapshot.hasError) {
-                    return Text('${snapshot.error}');
-                  }
-                  return const CircularProgressIndicator();
-                },
-              )),
+                    )),
           Positioned(
               top: Dimensions.newsDetailIconHeightMargin,
               left: Dimensions.widthMargin,
@@ -80,33 +76,23 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                       topRight: Radius.circular(20)),
                   color: AppColors.textBackgroundColor
                 ),
-                child: FutureBuilder<News>(
-                  future: futureNewsModel,
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      return Column(
+                child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          SmallText(text: snapshot.data!.content.first.subHeading, color: const Color(0x903C3C3C),),
+                          SmallText(text: widget.subheading, color: const Color(0x903C3C3C),),
                           SizedBox(height: Dimensions.newsImageTextBoxSizedBoxHeight),
-                          BigText(text: snapshot.data!.content.first.heading,
+                          BigText(text: widget.heading,
                             overflow: TextOverflow.fade, maxLines: 10,
                             size: 15, fontWeight: FontWeight.bold,),
                           SizedBox(height: Dimensions.newsImageTextBoxSizedBoxHeight * 1.5),
                           Expanded(
                             child: SingleChildScrollView(
-                              child: NewsText(text: snapshot.data!.content.first.content),
+                              child: NewsText(text: widget.text),
                             ),
                           )
                         ],
-                      );
-                    } else if (snapshot.hasError) {
-                      return Text('${snapshot.error}');
-                    }
-                    return const CircularProgressIndicator();
-                  },
-                ),
+                      )
 
 
               )
