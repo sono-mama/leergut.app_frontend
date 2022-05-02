@@ -1,11 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/pages/home/news_slider.dart';
-import 'package:frontend/utils/dimensions.dart';
+import 'package:frontend/utils/style/dimensions.dart';
 import 'package:frontend/widgets/big_text.dart';
 
-import '../../utils/colors.dart';
-import '../../widgets/bottom_navbar.dart';
+import '../../utils/style/colors.dart';
 
 
 class HomePage extends StatefulWidget {

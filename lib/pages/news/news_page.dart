@@ -8,8 +8,8 @@ import 'package:frontend/utils/http/api_service.dart';
 import 'package:frontend/utils/http/news_model.dart';
 import 'package:frontend/widgets/bottom_navbar.dart';
 
-import '../../utils/colors.dart';
-import '../../utils/dimensions.dart';
+import '../../utils/style/colors.dart';
+import '../../utils/style/dimensions.dart';
 import '../../widgets/big_text.dart';
 
 class NewsPage extends StatefulWidget {

@@ -1,9 +1,9 @@
 
 import 'package:flutter/material.dart';
-import 'package:frontend/utils/colors.dart';
+import 'package:frontend/utils/style/colors.dart';
 import 'package:frontend/widgets/small_text.dart';
 
-import '../../utils/dimensions.dart';
+import '../../utils/style/dimensions.dart';
 
 class NewsText extends StatefulWidget {
 

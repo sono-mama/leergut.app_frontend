@@ -3,8 +3,8 @@ import 'dart:ui';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:frontend/utils/colors.dart';
-import 'package:frontend/utils/dimensions.dart';
+import 'package:frontend/utils/style/colors.dart';
+import 'package:frontend/utils/style/dimensions.dart';
 
 class NewsSlider extends StatefulWidget {
   const NewsSlider({Key? key}) : super(key: key);
