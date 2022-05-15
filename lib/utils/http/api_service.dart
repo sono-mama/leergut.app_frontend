@@ -5,6 +5,7 @@ import 'package:frontend/utils/auth/cache_manager.dart';
 import 'package:frontend/utils/http/auth/jwt_model.dart';
 import 'package:frontend/utils/http/auth/jwt_parser.dart';
 import 'package:frontend/utils/http/news_model.dart';
+import 'package:frontend/utils/http/past_transaction_model.dart';
 import 'package:frontend/utils/http/transaction_model.dart';
 import 'package:frontend/utils/http/transaction_response_model.dart';
 import 'package:get/get.dart';
@@ -16,14 +17,15 @@ class ApiService extends GetConnect with CacheManager {
 
 
   Future<News> fetchNewsModel(String pagination) async {
+    String? token = getToken();
+    Uri newsUrl = Uri.parse(ApiConstants.devUrl + ApiConstants.newsEndpoint + pagination);
     final response = await get(
-        Uri.parse(ApiConstants.devUrl + ApiConstants.newsEndpoint + pagination),
+        newsUrl,
         headers: {
-          HttpHeaders.authorizationHeader:
-              'Bearer eyJhbGciOiJIUzUxMiJ9.eyJyb2xlIjoiVVNFUiIsInN1YiI6InRlc3RuYW1lNSIsImlhdCI6MTY1MTA0NDA3OCwiZXhwIjoxNjUxMDcyODc4fQ.jt27qIXeCjPnM_NuKJXe22535cwFfzhPfgVjSvsRznFMWmqbArWKFdSzCIIFliondwHcsO-O3HcaE-xBROPsEw'
+          'Content-Type':'application/json',
+          'Authorization': 'Bearer $token',
         });
 
-    print(response.body);
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,
       // then parse the JSON.
@@ -35,7 +37,7 @@ class ApiService extends GetConnect with CacheManager {
     }
   }
 
-  Future<TransactionResponseModel?> fetchTransaction(
+  Future<TransactionResponseModel> fetchTransaction(
       TransactionModel model) async {
     String? token = getToken();
     JwtModel jwt = JwtModel.fromJson(JwtParser().parseJwt(token!));
@@ -52,7 +54,27 @@ class ApiService extends GetConnect with CacheManager {
     if (response.statusCode == HttpStatus.ok) {
       return TransactionResponseModel.fromJson(jsonDecode(response.body));
     } else {
-      return null;
+      throw Exception('Failed to load');
+    }
+  }
+
+  Future<PastTransactionModel> fetchPastTransactions() async {
+    String? token = getToken();
+    JwtModel jwt = JwtModel.fromJson(JwtParser().parseJwt(token!));
+    String? user = jwt.sub;
+    Uri pastTransactionUrl = Uri.parse(ApiConstants.devUrl + '/user/$user/transactions');
+    final response = await get(pastTransactionUrl,
+        headers: {
+          'Content-Type':'application/json',
+          'Authorization': 'Bearer $token',
+        });
+
+
+    if (response.statusCode == HttpStatus.ok) {
+      print(json.decode(response.body));
+      return PastTransactionModel.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Failed to load');
     }
   }
 }

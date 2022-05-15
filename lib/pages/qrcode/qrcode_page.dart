@@ -78,7 +78,7 @@ class _QrCodePageState extends State<QrCodePage> {
               final response =
                   await ApiService().fetchTransaction(_transactionModel);
 
-              if (response?.status.toString() == "successful") {
+              if (response.status.toString() == "successful") {
                 Get.defaultDialog(
                     title: ":)",
                     middleText: 'Pfandbon erfolgreich übermittelt.',
@@ -95,8 +95,8 @@ class _QrCodePageState extends State<QrCodePage> {
                       );
                     });
               } else {
-                debugPrint(response?.status);
-                String? error = response?.status;
+                debugPrint(response.status);
+                String? error = response.status;
                 Get.defaultDialog(
                     title: ":(",
                     middleText: 'Fehler bei der Übermittlung: $error',

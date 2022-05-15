@@ -8,18 +8,27 @@ import '../../widgets/big_text.dart';
 import '../../widgets/small_text.dart';
 
 class DepositPreview extends StatefulWidget {
-  const DepositPreview({Key? key}) : super(key: key);
+
+  final double amount;
+  final bool payedOut;
+
+
+  const DepositPreview({Key? key,
+    required this.amount,
+    required this.payedOut
+  }) : super(key: key);
 
   @override
   State<DepositPreview> createState() => _DepositPreviewState();
 }
 
 class _DepositPreviewState extends State<DepositPreview> {
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: Container(
-        padding: EdgeInsets.only(left: 5),
+        padding: const EdgeInsets.only(left: 5),
         margin: EdgeInsets.only(bottom: Dimensions.heightMargin15),
         height: Dimensions.depositPreviewHeight,
         width: Dimensions.depositPreviewWidth,
@@ -40,13 +49,13 @@ class _DepositPreviewState extends State<DepositPreview> {
                 margin: EdgeInsets.only(
                     top: Dimensions.heightMargin15,
                     right: Dimensions.widthMargin30),
-                  child: BigText(text: "Supermarkt 1", size: 15, fontWeight: FontWeight.w500)),
+                  child: BigText(text: "Test Supermarkt", size: 15, fontWeight: FontWeight.w500)),
               Container(
                   margin: EdgeInsets.only(top: Dimensions.heightMargin5),
-                  child: SmallText(text: "€ 1,20", size: 13, color: const Color(0x903C3C3C),)),
-              Container(
+                  child: SmallText(text: widget.amount.toString(), size: 13, color: const Color(0x903C3C3C),)),
+              /*Container(
                   margin: EdgeInsets.only(top: Dimensions.heightMargin5),
-                  child: SmallText(text: "23.04.2022", size: 13, color: const Color(0x903C3C3C),)),
+                  child: SmallText(text: "23.04.2022", size: 13, color: const Color(0x903C3C3C),)),*/
             ],
           ),
             const SizedBox(
@@ -58,7 +67,7 @@ class _DepositPreviewState extends State<DepositPreview> {
               children: [
                 Row(
                   children: [
-                    SmallText(text: "ausgezahlt", color: Colors.green.withOpacity(0.7)),
+                    widget.payedOut ?  SmallText(text: "ausgezahlt", color: Colors.green.withOpacity(0.7)) : SmallText(text: "nicht ausgezahlt", color: Colors.red.withOpacity(0.7)),
                     const AppIcon(icon: Icons.arrow_forward_ios),
                   ],
                 )],
