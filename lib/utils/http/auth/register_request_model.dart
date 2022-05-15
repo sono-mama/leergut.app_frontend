@@ -11,8 +11,8 @@ class RegisterRequestModel {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['username'] = username;
     data['email'] = email;
-    data['firstname'] = firstname;
-    data['lastname'] = lastname;
+    data['firstName'] = firstname;
+    data['lastName'] = lastname;
     data['password'] = password;
 
     return data;

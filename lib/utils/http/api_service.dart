@@ -11,6 +11,7 @@ import 'package:frontend/utils/http/transaction_response_model.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart';
 
+import 'auth/user_model.dart';
 import 'constants.dart';
 
 class ApiService extends GetConnect with CacheManager {
@@ -58,6 +59,26 @@ class ApiService extends GetConnect with CacheManager {
     }
   }
 
+  Future<UserModel> fetchUser() async {
+    String? token = getToken();
+    JwtModel jwt = JwtModel.fromJson(JwtParser().parseJwt(token!));
+    String? user = jwt.sub;
+    Uri userUrl = Uri.parse(ApiConstants.devUrl + '/user/$user');
+    final response = await get(userUrl,
+        headers: {
+          'Content-Type':'application/json',
+          'Authorization': 'Bearer $token',
+        });
+
+
+    if (response.statusCode == HttpStatus.ok) {
+      print(json.decode(response.body));
+      return UserModel.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Failed to load');
+    }
+  }
+
   Future<PastTransactionModel> fetchPastTransactions() async {
     String? token = getToken();
     JwtModel jwt = JwtModel.fromJson(JwtParser().parseJwt(token!));
@@ -77,4 +98,5 @@ class ApiService extends GetConnect with CacheManager {
       throw Exception('Failed to load');
     }
   }
+
 }

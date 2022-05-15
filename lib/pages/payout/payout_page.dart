@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/pages/payout/deposit_preview.dart';
+import 'package:intl/intl.dart';
 
 import '../../utils/http/api_service.dart';
+import '../../utils/http/balance_calc.dart';
 import '../../utils/http/past_transaction_model.dart';
 import '../../utils/style/colors.dart';
 import '../../utils/style/dimensions.dart';
@@ -41,12 +43,23 @@ class _PayoutPageState extends State<PayoutPage> {
               children: [
                 Column(
                   children: [
-                    BigText(
-                        text: "Dein aktuelles\nPfandguthaben beträgt:\n6,20€",
-                        maxLines: 3,
-                        color: AppColors.textColor,
-                        size: 25,
-                        fontWeight: FontWeight.bold)
+                    FutureBuilder<PastTransactionModel>(
+                        future: futurePastTransactionsModel,
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            return BigText(
+                                text:
+                                    "Dein aktuelles\nPfandguthaben beträgt:\n" +
+                                        NumberFormat.simpleCurrency(locale: 'eu').format(BalanceCalc().calculateBalance(snapshot.data!.transactions)).toString(),
+                                maxLines: 3,
+                                color: AppColors.textColor,
+                                size: 25,
+                                fontWeight: FontWeight.bold);
+                          } else if (snapshot.hasError) {
+                            return Text('${snapshot.error}');
+                          }
+                          return const CircularProgressIndicator();
+                        })
                   ],
                 ),
               ],

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../../utils/style/colors.dart';
 import '../../utils/style/dimensions.dart';
@@ -52,7 +53,7 @@ class _DepositPreviewState extends State<DepositPreview> {
                   child: BigText(text: "Test Supermarkt", size: 15, fontWeight: FontWeight.w500)),
               Container(
                   margin: EdgeInsets.only(top: Dimensions.heightMargin5),
-                  child: SmallText(text: widget.amount.toString(), size: 13, color: const Color(0x903C3C3C),)),
+                  child: SmallText(text: NumberFormat.simpleCurrency(locale: 'eu').format(widget.amount).toString(), size: 13, color: const Color(0x903C3C3C),)),
               /*Container(
                   margin: EdgeInsets.only(top: Dimensions.heightMargin5),
                   child: SmallText(text: "23.04.2022", size: 13, color: const Color(0x903C3C3C),)),*/
@@ -68,7 +69,7 @@ class _DepositPreviewState extends State<DepositPreview> {
                 Row(
                   children: [
                     widget.payedOut ?  SmallText(text: "ausgezahlt", color: Colors.green.withOpacity(0.7)) : SmallText(text: "nicht ausgezahlt", color: Colors.red.withOpacity(0.7)),
-                    const AppIcon(icon: Icons.arrow_forward_ios),
+
                   ],
                 )],
             ),
