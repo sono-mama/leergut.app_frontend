@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/utils/style/colors.dart';
+import 'package:frontend/widgets/small_text.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
@@ -20,39 +21,25 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
 
   TextEditingController usernameCtr = TextEditingController();
   TextEditingController passwordCtr = TextEditingController();
+  TextEditingController firstnameCtr = TextEditingController();
+  TextEditingController lastnameCtr = TextEditingController();
+  TextEditingController emailCtr = TextEditingController();
   FormType _formType = FormType.login;
+
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Align(
-            alignment: Alignment.center,
-            child: Container(
-              margin: EdgeInsets.only(top: Dimensions.loginHeightMargin, bottom: Dimensions.heightMargin50),
-              height: 150,
-              width: 150,
-              decoration: const BoxDecoration(
-                //border: Border.all(),
-                  image: DecorationImage(
-                      fit: BoxFit.contain,
-                      image: AssetImage(
-                          "assets/images/leergut_app_logo_top.png"))),
-            ),
-          ),
-          Padding(
+      body: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: _formType == FormType.login ? loginForm() : registerForm(),
-          ),
-        ],
-      ),
-    );
+    ));
   }
 
   Form loginForm() {
     return Form(
-      autovalidateMode: AutovalidateMode.onUserInteraction,
+      autovalidateMode: AutovalidateMode.disabled,
       key: formKey,
       child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
         TextFormField(
@@ -64,7 +51,7 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
           },
           decoration: inputDecoration('Benutzername', Icons.person),
         ),
-        SizedBox(
+        const SizedBox(
           height: 8,
         ),
         TextFormField(
@@ -76,13 +63,19 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
           controller: passwordCtr,
           decoration: inputDecoration('Passwort', Icons.lock),
         ),
+        const SizedBox(
+          height: 16,
+        ),
         ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            primary: AppColors.highlightColor
+          ),
           onPressed: () async {
             if (formKey.currentState?.validate() ?? false) {
               await _viewModel.loginUser(usernameCtr.text, passwordCtr.text);
             }
           },
-          child: Text('Login'),
+          child: const Text('Login'),
         ),
         TextButton(
           onPressed: () {
@@ -90,7 +83,7 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
               _formType = FormType.register;
             });
           },
-          child: Text('Does not have an account?'),
+          child: SmallText(text: 'Noch keinen Account? Jetzt registrieren!', color: AppColors.secondaryColor),
         )
       ]),
     );
@@ -98,7 +91,7 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
 
   Form registerForm() {
     return Form(
-      autovalidateMode: AutovalidateMode.onUserInteraction,
+      autovalidateMode: AutovalidateMode.disabled,
       key: formKey,
       child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
         TextFormField(
@@ -110,7 +103,7 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
           },
           decoration: inputDecoration('Benutzername', Icons.person),
         ),
-        SizedBox(
+        const SizedBox(
           height: 8,
         ),
         TextFormField(
@@ -122,7 +115,7 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
           controller: passwordCtr,
           decoration: inputDecoration('Passwort', Icons.lock),
         ),
-        SizedBox(
+        const SizedBox(
           height: 8,
         ),
         TextFormField(
@@ -133,13 +126,55 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
           },
           decoration: inputDecoration('Passwort wiederholen', Icons.lock),
         ),
+        const SizedBox(
+          height: 8,
+        ),
+        TextFormField(
+          controller: firstnameCtr,
+          validator: (value) {
+            return (value == null || value.isEmpty)
+                ? 'Bitte Vornamen eingeben'
+                : null;
+          },
+          decoration: inputDecoration('Vorname', Icons.person),
+        ),
+        const SizedBox(
+          height: 8,
+        ),
+        TextFormField(
+          controller: lastnameCtr,
+          validator: (value) {
+            return (value == null || value.isEmpty)
+                ? 'Bitte Nachnamen eingeben'
+                : null;
+          },
+          decoration: inputDecoration('Nachname', Icons.person),
+        ),
+        const SizedBox(
+          height: 8,
+        ),
+        TextFormField(
+          controller: emailCtr,
+          validator: (value) {
+            return (value == null || value.isEmpty)
+                ? 'Bitte E-Mail Adresse eingeben'
+                : null;
+          },
+          decoration: inputDecoration('E-Mail Adresse', Icons.person),
+        ),
+        const SizedBox(
+          height: 16,
+        ),
         ElevatedButton(
+          style: ElevatedButton.styleFrom(
+              primary: AppColors.highlightColor
+          ),
           onPressed: () async {
             if (formKey.currentState?.validate() ?? false) {
-              await _viewModel.registerUser(usernameCtr.text, passwordCtr.text);
+              await _viewModel.registerUser(usernameCtr.text, emailCtr.text, firstnameCtr.text, lastnameCtr.text, passwordCtr.text);
             }
           },
-          child: Text('Registrieren'),
+          child: const Text('Registrieren'),
         ),
         TextButton(
           onPressed: () {
@@ -147,7 +182,7 @@ class _LoginRegisterPageState extends State<LoginRegisterPage> {
               _formType = FormType.login;
             });
           },
-          child: Text('Login'),
+          child: SmallText(text: 'Zurück zur Anmeldung', color: AppColors.secondaryColor),
         )
       ]),
     );
@@ -170,17 +205,17 @@ InputDecoration inputDecoration(String labelText, IconData iconData,
     ),
     prefixIconConstraints: BoxConstraints(minWidth: 60),
     enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(30),
-        borderSide: BorderSide(color: Colors.black)),
+        borderRadius: BorderRadius.circular(20),
+        borderSide: BorderSide(color: AppColors.textBackgroundColor)),
     focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(30),
-        borderSide: BorderSide(color: Colors.black)),
+        borderRadius: BorderRadius.circular(20),
+        borderSide: BorderSide(color: AppColors.textBackgroundColor)),
     errorBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(30),
-        borderSide: BorderSide(color: Colors.black)),
+        borderRadius: BorderRadius.circular(20),
+        borderSide: BorderSide(color: AppColors.textBackgroundColor)),
     border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(30),
-        borderSide: BorderSide(color: Colors.black)),
+        borderRadius: BorderRadius.circular(20),
+        borderSide: BorderSide(color: AppColors.textBackgroundColor)),
   );
 }
 

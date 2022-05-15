@@ -1,11 +1,9 @@
 class RegisterResponseModel {
-  String? token;
-  int? id;
+  String? status;
 
-  RegisterResponseModel({this.token, this.id});
+  RegisterResponseModel({this.status});
 
   RegisterResponseModel.fromJson(Map<String, dynamic> json) {
-    token = json['token'];
-    id = json['id'];
+    status = json['status'] as String;
   }
 }

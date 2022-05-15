@@ -8,7 +8,7 @@ class Dimensions {
   static double scalingFactor = 5.6;
   static double scalingFactorTextBox = 21.1;
   static double scalingFactorTextBoxTopMargin = 8.44;
-  static double scalingFactorHomePageTextBoxTopMargin = 5.62;
+  static double scalingFactorHomePageTextBoxTopMargin = 7.67;
   static double scalingFactorHeadlineTopMargin = 8.44;
   static double scalingFactorWidthMargin = 19.5; // 43.5
   static double scalingFactorHeightMargin = 84.4; // 10

@@ -10,8 +10,8 @@ import 'login_response_model.dart';
 
 
 class LoginService extends GetConnect {
-  final String loginUrl = ApiConstants.baseUrl;
-  final String registerUrl = ApiConstants.baseUrl + ApiConstants.registerEndpoint;
+  final String loginUrl = ApiConstants.devUrl + ApiConstants.loginEndpoint;
+  final String registerUrl = ApiConstants.devUrl + ApiConstants.registerEndpoint;
 
   Future<LoginResponseModel?> fetchLogin(LoginRequestModel model) async {
     final response = await post(loginUrl, model.toJson());

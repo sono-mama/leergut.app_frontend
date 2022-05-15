@@ -1,9 +1,8 @@
 import 'package:flutter/cupertino.dart';
-import 'package:frontend/pages/home/home_page.dart';
-import 'package:frontend/pages/login/login_page.dart';
 import 'package:frontend/pages/login/login_register_page.dart';
 import 'package:get/get.dart';
 
+import '../../pages/home/base_page.dart';
 import 'authentication_manager.dart';
 
 class OnBoard extends StatelessWidget {
@@ -14,7 +13,7 @@ class OnBoard extends StatelessWidget {
     AuthenticationManager _authManager = Get.find();
 
     return Obx(() {
-      return _authManager.isLogged.value ? const HomePage() : const LoginRegisterPage();
+      return _authManager.isLogged.value ? const BasePage() : const LoginRegisterPage();
     });
   }
 }

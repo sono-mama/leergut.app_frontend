@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/utils/http/auth/register_request_model.dart';
+import 'package:frontend/utils/style/colors.dart';
 import 'package:get/get.dart';
 
 import '../../auth/authentication_manager.dart';
@@ -27,28 +28,45 @@ class LoginViewModel extends GetxController {
     } else {
       /// Show user a dialog about the error response
       Get.defaultDialog(
-          middleText: 'User not found!',
+          title: ":(",
+          middleText: 'Benutzername oder Passwort falsch',
           textConfirm: 'OK',
-          confirmTextColor: Colors.white,
+          buttonColor: AppColors.highlightColor,
+          confirmTextColor: AppColors.textBackgroundColor,
           onConfirm: () {
             Get.back();
           });
     }
   }
 
-  Future<void> registerUser(String username, String password) async {
+  Future<void> registerUser(String username, String email, String firstname,
+      String lastname, String password,) async {
     final response = await _loginService
-        .fetchRegister(RegisterRequestModel(username: username, password: password));
+        .fetchRegister(RegisterRequestModel(username: username, email: email,
+        firstname: firstname, lastname: lastname, password: password));
 
-    if (response != null) {
+    if (response?.status.toString() == "Success") {
+      print(response?.status);
+      Get.defaultDialog(
+          title: ":)",
+          middleText: 'Erfolgreich registriert!',
+          textConfirm: 'OK',
+          confirmTextColor: AppColors.textBackgroundColor,
+          buttonColor: AppColors.highlightColor,
+          onConfirm: () {
+            Get.back();
+          });
       /// Set isLogin to true
-      _authManager.login(response.token);
+      //_authManager.login(response.token);
     } else {
+      print(response?.status);
       /// Show user a dialog about the error response
       Get.defaultDialog(
-          middleText: 'Register Error',
+          title: ":(",
+          middleText: 'Fehler bei der Registrierung. Bitte erneut versuchen!',
           textConfirm: 'OK',
-          confirmTextColor: Colors.white,
+          confirmTextColor: AppColors.textBackgroundColor,
+          buttonColor: AppColors.highlightColor,
           onConfirm: () {
             Get.back();
           });
