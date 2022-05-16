@@ -6,6 +6,7 @@ import 'package:frontend/utils/http/auth/jwt_model.dart';
 import 'package:frontend/utils/http/auth/jwt_parser.dart';
 import 'package:frontend/utils/http/news_model.dart';
 import 'package:frontend/utils/http/past_transaction_model.dart';
+import 'package:frontend/utils/http/payout_response_model.dart';
 import 'package:frontend/utils/http/transaction_model.dart';
 import 'package:frontend/utils/http/transaction_response_model.dart';
 import 'package:get/get.dart';
@@ -90,7 +91,6 @@ class ApiService extends GetConnect with CacheManager {
           'Authorization': 'Bearer $token',
         });
 
-
     if (response.statusCode == HttpStatus.ok) {
       print(json.decode(response.body));
       return PastTransactionModel.fromJson(json.decode(response.body));
@@ -99,4 +99,28 @@ class ApiService extends GetConnect with CacheManager {
     }
   }
 
+  Future<PayoutResponseModel> fetchPayout(bool all) async {
+    String? token = getToken();
+    JwtModel jwt = JwtModel.fromJson(JwtParser().parseJwt(token!));
+    String? user = jwt.sub;
+    Uri payoutUrl;
+    if (all = true) {
+      payoutUrl = Uri.parse(
+          ApiConstants.devUrl + '/user/$user/transaction?all=true');
+    } else {
+      payoutUrl = Uri.parse(
+          ApiConstants.devUrl + '/user/$user/transaction?all=false');
+    }
+    final response = await put(payoutUrl,
+        headers: {
+          'Content-Type':'application/json',
+          'Authorization': 'Bearer $token',
+        });
+
+    if (response.statusCode == HttpStatus.ok) {
+      return PayoutResponseModel.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Failed to load');
+    }
+  }
 }

@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/pages/payout/deposit_preview.dart';
+import 'package:frontend/utils/http/payout_response_model.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:intl/intl.dart';
 
 import '../../utils/http/api_service.dart';
@@ -9,6 +12,7 @@ import '../../utils/http/past_transaction_model.dart';
 import '../../utils/style/colors.dart';
 import '../../utils/style/dimensions.dart';
 import '../../widgets/big_text.dart';
+import '../home/base_page.dart';
 
 class PayoutPage extends StatefulWidget {
   const PayoutPage({Key? key}) : super(key: key);
@@ -50,7 +54,12 @@ class _PayoutPageState extends State<PayoutPage> {
                             return BigText(
                                 text:
                                     "Dein aktuelles\nPfandguthaben beträgt:\n" +
-                                        NumberFormat.simpleCurrency(locale: 'eu').format(BalanceCalc().calculateBalance(snapshot.data!.transactions)).toString(),
+                                        NumberFormat.simpleCurrency(
+                                                locale: 'eu')
+                                            .format(BalanceCalc()
+                                                .calculateBalance(snapshot
+                                                    .data!.transactions))
+                                            .toString(),
                                 maxLines: 3,
                                 color: AppColors.textColor,
                                 size: 25,
@@ -106,22 +115,112 @@ class _PayoutPageState extends State<PayoutPage> {
           child: Container(
             margin: EdgeInsets.only(
                 top: Dimensions.heightMargin30,
-                bottom: Dimensions.heightMargin30),
-            height: Dimensions.loginButtonHeight,
-            width: Dimensions.loginButtonWidth,
-            decoration: BoxDecoration(
-              color: AppColors.highlightColor,
-              borderRadius: BorderRadius.circular(30),
-            ),
-            child: Center(
-              child: BigText(
-                  text: "Jetzt auszahlen",
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.imageTextColor),
+                bottom: Dimensions.heightMargin50),
+            child: ElevatedButton(
+              style:
+                  ElevatedButton.styleFrom(primary: AppColors.highlightColor),
+              onPressed: () {
+                Navigator.of(context).restorablePush(_modalBuilder);
+              },
+              child: const Text('Jetzt auszahlen'),
             ),
           ),
         ),
       ],
     ));
+  }
+
+  static Route<void> _modalBuilder(BuildContext context, Object? arguments) {
+    return CupertinoModalPopupRoute<void>(
+      builder: (BuildContext context) {
+        return CupertinoActionSheet(
+          title: const Text('Was möchtest du auszahlen?'),
+          actions: <CupertinoActionSheetAction>[
+            CupertinoActionSheetAction(
+              child: const Text('Alles auszahlen'),
+              onPressed: () async {
+                final response = await ApiService().fetchPayout(true);
+
+                if (response.status.toString() == "successful") {
+                  Get.defaultDialog(
+                      title: ":)",
+                      middleText: 'Guthaben ausgezahlt!',
+                      textConfirm: 'OK',
+                      confirmTextColor: AppColors.textBackgroundColor,
+                      buttonColor: AppColors.highlightColor,
+                      onConfirm: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (BuildContext context) {
+                            return const BasePage();
+                          }),
+                        );
+                      });
+                } else {
+                  debugPrint(response.status);
+                  String? error = response.status;
+                  Get.defaultDialog(
+                      title: ":(",
+                      middleText: 'Fehler bei der Übermittlung: $error',
+                      textConfirm: 'OK',
+                      confirmTextColor: AppColors.textBackgroundColor,
+                      buttonColor: AppColors.highlightColor,
+                      onConfirm: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (BuildContext context) {
+                            return const BasePage();
+                          }),
+                        );
+                      });
+                }
+                Navigator.pop(context);
+              },
+            ),
+            CupertinoActionSheetAction(
+              child: const Text('Den letzten Pfandbon auszahlen'),
+              onPressed: () async {
+                final response = await ApiService().fetchPayout(false);
+
+                if (response.status.toString() == "successful") {
+                  Get.defaultDialog(
+                      title: ":)",
+                      middleText: 'Guthaben ausgezahlt!',
+                      textConfirm: 'OK',
+                      confirmTextColor: AppColors.textBackgroundColor,
+                      buttonColor: AppColors.highlightColor,
+                      onConfirm: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (BuildContext context) {
+                            return const BasePage();
+                          }),
+                        );
+                      });
+                } else {
+                  debugPrint(response.status);
+                  String? error = response.status;
+                  Get.defaultDialog(
+                      title: ":(",
+                      middleText: 'Fehler bei der Übermittlung: $error',
+                      textConfirm: 'OK',
+                      confirmTextColor: AppColors.textBackgroundColor,
+                      buttonColor: AppColors.highlightColor,
+                      onConfirm: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (BuildContext context) {
+                            return const BasePage();
+                          }),
+                        );
+                      });
+                }
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }

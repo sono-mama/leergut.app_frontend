@@ -105,7 +105,7 @@ class _LoginPageState extends State<LoginPage> {
             children: [
               Expanded(child: Container()),
               Container(
-                  margin: EdgeInsets.only(right: 30, top: 10),
+                  margin: const EdgeInsets.only(right: 30, top: 10),
                   child: SmallText(text: "Passwort vergessen?"))
             ],
           ),
