@@ -1,11 +1,14 @@
 import 'dart:convert';
 
+
+import 'package:equatable/equatable.dart';
+
 PastTransactionModel pastTransactionModelFromJson(String str) => PastTransactionModel.fromJson(json.decode(str));
 
 String pastTransactionModelToJson(PastTransactionModel data) => json.encode(data.toJson());
 
-class PastTransactionModel {
-  PastTransactionModel({
+class PastTransactionModel extends Equatable {
+  const PastTransactionModel({
     required this.id,
     required this.firstName,
     required this.lastName,
@@ -15,13 +18,13 @@ class PastTransactionModel {
     required this.transactions,
   });
 
-  int id;
-  String firstName;
-  String lastName;
-  String username;
-  String email;
-  String appUserRole;
-  List<Transaction> transactions;
+  final int id;
+  final String firstName;
+  final String lastName;
+  final String username;
+  final String email;
+  final String appUserRole;
+  final List<Transaction> transactions;
 
   factory PastTransactionModel.fromJson(Map<String, dynamic> json) => PastTransactionModel(
     id: json["id"],
@@ -42,10 +45,13 @@ class PastTransactionModel {
     "appUserRole": appUserRole,
     "transactions": List<dynamic>.from(transactions.map((x) => x.toJson())),
   };
+
+  @override
+  List<Object?> get props => [id, firstName, lastName, username, email, appUserRole, transactions];
 }
 
-class Transaction {
-  Transaction({
+class Transaction extends Equatable {
+  const Transaction({
     required this.id,
     required this.amount,
     required this.correspondingTransaction,
@@ -53,11 +59,11 @@ class Transaction {
     required this.sequenceNumber,
   });
 
-  String id;
-  double amount;
-  String correspondingTransaction;
-  bool payedOut;
-  int sequenceNumber;
+  final String id;
+  final double amount;
+  final String correspondingTransaction;
+  final bool payedOut;
+  final int sequenceNumber;
 
   factory Transaction.fromJson(Map<String, dynamic> json) => Transaction(
     id: json["id"],
@@ -74,4 +80,7 @@ class Transaction {
     "payedOut": payedOut,
     "sequenceNumber": sequenceNumber,
   };
+
+  @override
+  List<Object?> get props => [id, amount, correspondingTransaction, payedOut, sequenceNumber];
 }

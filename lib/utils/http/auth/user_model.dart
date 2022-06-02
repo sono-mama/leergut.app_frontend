@@ -1,10 +1,12 @@
 import 'dart:convert';
 
+import 'package:equatable/equatable.dart';
+
 UserModel userModelFromJson(String str) => UserModel.fromJson(json.decode(str));
 
 String pastTransactionModelToJson(UserModel data) => json.encode(data.toJson());
 
-class UserModel {
+class UserModel extends Equatable {
   UserModel({
     required this.id,
     required this.firstName,
@@ -14,12 +16,12 @@ class UserModel {
     required this.appUserRole,
   });
 
-  int id;
-  String firstName;
-  String lastName;
-  String username;
-  String email;
-  String appUserRole;
+  final int id;
+  final String firstName;
+  final String lastName;
+  final String username;
+  final String email;
+  final String appUserRole;
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
     id: json["id"],
@@ -38,6 +40,9 @@ class UserModel {
     "email": email,
     "appUserRole": appUserRole
   };
+
+  @override
+  List<Object?> get props => [id, firstName, lastName, username, email, appUserRole];
 }
 
 

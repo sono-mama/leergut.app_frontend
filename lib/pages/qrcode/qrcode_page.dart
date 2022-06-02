@@ -76,7 +76,7 @@ class _QrCodePageState extends State<QrCodePage> {
               debugPrint('Barcode found! $code');
               _transactionModel = TransactionModel(shopTransaction: code);
               final response =
-                  await ApiService().fetchTransaction(_transactionModel);
+                  await ApiService().fetchTransaction(_transactionModel, ApiService().getUser());
 
               if (response.status.toString() == "successful") {
                 Get.defaultDialog(

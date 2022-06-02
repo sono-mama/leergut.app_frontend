@@ -5,6 +5,7 @@ import 'package:frontend/utils/http/payout_response_model.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:intl/intl.dart';
+import 'package:http/http.dart' as http;
 
 import '../../utils/http/api_service.dart';
 import '../../utils/http/balance_calc.dart';
@@ -13,6 +14,7 @@ import '../../utils/style/colors.dart';
 import '../../utils/style/dimensions.dart';
 import '../../widgets/big_text.dart';
 import '../home/base_page.dart';
+
 
 class PayoutPage extends StatefulWidget {
   const PayoutPage({Key? key}) : super(key: key);
@@ -28,7 +30,7 @@ class _PayoutPageState extends State<PayoutPage> {
   @override
   void initState() {
     super.initState();
-    futurePastTransactionsModel = ApiService().fetchPastTransactions();
+    futurePastTransactionsModel = ApiService().fetchPastTransactions(http.Client(), ApiService().getUser());
   }
 
   @override
@@ -139,7 +141,7 @@ class _PayoutPageState extends State<PayoutPage> {
             CupertinoActionSheetAction(
               child: const Text('Alles auszahlen'),
               onPressed: () async {
-                final response = await ApiService().fetchPayout(true);
+                final response = await ApiService().fetchPayout(true, ApiService().getUser());
 
                 if (response.status.toString() == "successful") {
                   Get.defaultDialog(
@@ -180,7 +182,7 @@ class _PayoutPageState extends State<PayoutPage> {
             CupertinoActionSheetAction(
               child: const Text('Den letzten Pfandbon auszahlen'),
               onPressed: () async {
-                final response = await ApiService().fetchPayout(false);
+                final response = await ApiService().fetchPayout(false, ApiService().getUser());
 
                 if (response.status.toString() == "successful") {
                   Get.defaultDialog(

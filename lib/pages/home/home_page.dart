@@ -3,6 +3,7 @@ import 'package:frontend/pages/home/news_slider.dart';
 import 'package:frontend/utils/style/dimensions.dart';
 import 'package:frontend/widgets/big_text.dart';
 import 'package:intl/intl.dart';
+import 'package:http/http.dart' as http;
 import '../../utils/http/api_service.dart';
 import '../../utils/http/auth/user_model.dart';
 import '../../utils/http/balance_calc.dart';
@@ -23,8 +24,8 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    futureUserModel = ApiService().fetchUser();
-    futurePastTransactionsModel = ApiService().fetchPastTransactions();
+    futureUserModel = ApiService().fetchUser(http.Client(), ApiService().getUser());
+    futurePastTransactionsModel = ApiService().fetchPastTransactions(http.Client(), ApiService().getUser());
   }
 
   @override

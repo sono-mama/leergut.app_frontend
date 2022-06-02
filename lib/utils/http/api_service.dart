@@ -17,11 +17,10 @@ import 'constants.dart';
 
 class ApiService extends GetConnect with CacheManager {
 
-
-  Future<News> fetchNewsModel(String pagination) async {
+  Future<News> fetchNewsModel(String pagination, Client http) async {
     String? token = getToken();
     Uri newsUrl = Uri.parse(ApiConstants.devUrl + ApiConstants.newsEndpoint + pagination);
-    final response = await get(
+    final response = await http.get(
         newsUrl,
         headers: {
           'Content-Type':'application/json',
@@ -40,10 +39,9 @@ class ApiService extends GetConnect with CacheManager {
   }
 
   Future<TransactionResponseModel> fetchTransaction(
-      TransactionModel model) async {
-    String? token = getToken();
-    JwtModel jwt = JwtModel.fromJson(JwtParser().parseJwt(token!));
-    String? user = jwt.sub;
+      TransactionModel model, List tokenUser) async {
+    String? token = tokenUser[0];
+    String? user = tokenUser[1];
     Uri transactionUrl = Uri.parse(ApiConstants.devUrl + '/user/$user/transaction');
     final response = await post(transactionUrl,
         headers: {
@@ -60,10 +58,9 @@ class ApiService extends GetConnect with CacheManager {
     }
   }
 
-  Future<UserModel> fetchUser() async {
-    String? token = getToken();
-    JwtModel jwt = JwtModel.fromJson(JwtParser().parseJwt(token!));
-    String? user = jwt.sub;
+  Future<UserModel> fetchUser(Client http, List tokenUser) async {
+    String? token = tokenUser[0];
+    String? user = tokenUser[1];
     Uri userUrl = Uri.parse(ApiConstants.devUrl + '/user/$user');
     final response = await get(userUrl,
         headers: {
@@ -80,12 +77,11 @@ class ApiService extends GetConnect with CacheManager {
     }
   }
 
-  Future<PastTransactionModel> fetchPastTransactions() async {
-    String? token = getToken();
-    JwtModel jwt = JwtModel.fromJson(JwtParser().parseJwt(token!));
-    String? user = jwt.sub;
+  Future<PastTransactionModel> fetchPastTransactions(Client http, List tokenUser) async {
+    String? token = tokenUser[0];
+    String? user = tokenUser[1];
     Uri pastTransactionUrl = Uri.parse(ApiConstants.devUrl + '/user/$user/transactions');
-    final response = await get(pastTransactionUrl,
+    final response = await http.get(pastTransactionUrl,
         headers: {
           'Content-Type':'application/json',
           'Authorization': 'Bearer $token',
@@ -99,10 +95,9 @@ class ApiService extends GetConnect with CacheManager {
     }
   }
 
-  Future<PayoutResponseModel> fetchPayout(bool all) async {
-    String? token = getToken();
-    JwtModel jwt = JwtModel.fromJson(JwtParser().parseJwt(token!));
-    String? user = jwt.sub;
+  Future<PayoutResponseModel> fetchPayout(bool all, List tokenUser) async {
+    String? token = tokenUser[0];
+    String? user = tokenUser[1];
     Uri payoutUrl;
     if (all = true) {
       payoutUrl = Uri.parse(
@@ -122,5 +117,12 @@ class ApiService extends GetConnect with CacheManager {
     } else {
       throw Exception('Failed to load');
     }
+  }
+
+  List getUser() {
+    String? token = getToken();
+    JwtModel jwt = JwtModel.fromJson(JwtParser().parseJwt(token!));
+    String? user = jwt.sub;
+    return [token, user];
   }
 }

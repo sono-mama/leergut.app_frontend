@@ -7,7 +7,7 @@ import 'package:frontend/pages/news/news_preview.dart';
 import 'package:frontend/utils/http/api_service.dart';
 import 'package:frontend/utils/http/news_model.dart';
 import 'package:frontend/widgets/bottom_navbar.dart';
-
+import 'package:http/http.dart' as http;
 import '../../utils/style/colors.dart';
 import '../../utils/style/dimensions.dart';
 import '../../widgets/big_text.dart';
@@ -26,7 +26,7 @@ class _NewsPageState extends State<NewsPage> {
   @override
   void initState() {
     super.initState();
-    futureNewsModel = ApiService().fetchNewsModel("/0/10");
+    futureNewsModel = ApiService().fetchNewsModel("/0/10", http.Client());
   }
 
   @override
