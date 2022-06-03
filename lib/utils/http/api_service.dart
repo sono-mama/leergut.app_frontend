@@ -109,6 +109,7 @@ class ApiService extends GetConnect with CacheManager {
           'Authorization': 'Bearer $token',
         });
 
+
     if (response.statusCode == HttpStatus.ok) {
       return PayoutResponseModel.fromJson(json.decode(response.body));
     } else {

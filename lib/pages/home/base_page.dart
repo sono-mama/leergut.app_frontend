@@ -37,6 +37,18 @@ class _BasePageState extends State<BasePage> {
   Widget build(BuildContext context) {
     AuthenticationManager _authManager = Get.find();
     return Scaffold(
+       /* appBar: AppBar(
+            backgroundColor: Colors.transparent,
+            elevation: 0.0,
+            actions: [
+              IconButton(
+                  color: Colors.white,
+                  icon: const Icon(Icons.power_settings_new),
+                  iconSize: 30.0,
+                  onPressed: () {
+                    _authManager.logOut();
+                  }),
+            ]),*/
       body: Center(
         child: _children[_currentIndex],
       ),

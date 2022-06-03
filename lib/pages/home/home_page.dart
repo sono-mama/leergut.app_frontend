@@ -31,18 +31,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      /*  appBar: AppBar(
-            backgroundColor: Colors.transparent,
-            elevation: 0.0,
-            actions: [
-              IconButton(
-                  color: Colors.white,
-                  icon: const Icon(Icons.power_settings_new),
-                  iconSize: 30.0,
-                  onPressed: () {
-                    _authManager.logOut();
-                  }),
-            ]),*/
       body: Column(
         children: [
           Container(
