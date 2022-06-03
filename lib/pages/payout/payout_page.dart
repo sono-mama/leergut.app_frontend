@@ -40,7 +40,6 @@ class _PayoutPageState extends State<PayoutPage> {
       children: [
         Container(
             margin: EdgeInsets.only(
-                top: Dimensions.homePageTextContainerTopMargin,
                 bottom: Dimensions.heightMargin15),
             padding: EdgeInsets.only(
                 left: Dimensions.widthMargin, right: Dimensions.widthMargin),

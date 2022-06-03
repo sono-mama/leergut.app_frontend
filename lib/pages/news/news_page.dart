@@ -34,8 +34,8 @@ class _NewsPageState extends State<NewsPage> {
     return Scaffold(
         body: Column(children: [
           Container(
-              margin: EdgeInsets.only(
-                  top: Dimensions.headlineTopMargin, bottom: 15),
+              margin: const EdgeInsets.only(
+                  bottom: 15),
               padding: const EdgeInsets.only(left: 20, right: 20),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
