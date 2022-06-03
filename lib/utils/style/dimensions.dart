@@ -8,7 +8,7 @@ class Dimensions {
   static double scalingFactor = 5.6;
   static double scalingFactorTextBox = 21.1;
   static double scalingFactorTextBoxTopMargin = 8.44;
-  static double scalingFactorHomePageTextBoxTopMargin = 5.62;
+  static double scalingFactorHomePageTextBoxTopMargin = 7.67;
   static double scalingFactorHeadlineTopMargin = 8.44;
   static double scalingFactorWidthMargin = 19.5; // 43.5
   static double scalingFactorHeightMargin = 84.4; // 10
@@ -35,9 +35,12 @@ class Dimensions {
   static double scalingFactorSignUpTextFieldHeight = 16.9; // 50
   static double scalingFactorLoginButtonHeight = 14; // 60
   static double scalingFactorLoginButtonWidth = 1.95; // 20
+  static double scalingFactorLoginHeightMargin = 8.44; // 100
 
   static double scalingFactorDepositPreviewHeight = 9.4; // 90
   static double scalingFactorDepositPreviewWidth = 1.95; // 200
+
+
 
 
 
@@ -73,8 +76,10 @@ class Dimensions {
   static double signUpPageTextFieldHeight = screenHeight / scalingFactorSignUpTextFieldHeight;
   static double loginButtonHeight = screenHeight / scalingFactorLoginButtonHeight;
   static double loginButtonWidth = screenWidth / scalingFactorLoginButtonWidth;
+  static double loginHeightMargin = screenHeight / scalingFactorLoginHeightMargin;
 
   static double depositPreviewHeight = screenHeight / scalingFactorDepositPreviewHeight;
   static double depositPreviewWidth = screenWidth / scalingFactorDepositPreviewWidth;
+
 
 }

@@ -5,12 +5,16 @@
 import 'dart:convert';
 
 
+import 'package:equatable/equatable.dart';
+
+
 News newsFromJson(String str) => News.fromJson(json.decode(str));
 
 String newsToJson(News data) => json.encode(data.toJson());
 
-class News {
-  News({
+class News extends Equatable{
+
+  const News({
     required this.content,
     required this.pageable,
     required this.totalPages,
@@ -24,17 +28,17 @@ class News {
     required this.empty,
   });
 
-  List<Content> content;
-  Pageable pageable;
-  int totalPages;
-  int totalElements;
-  bool last;
-  int size;
-  int number;
-  Sort sort;
-  int numberOfElements;
-  bool first;
-  bool empty;
+  final List<Content> content;
+  final Pageable pageable;
+  final int totalPages;
+  final int totalElements;
+  final bool last;
+  final int size;
+  final int number;
+  final Sort sort;
+  final int numberOfElements;
+  final bool first;
+  final bool empty;
 
   factory News.fromJson(Map<String, dynamic> json) => News(
     content: List<Content>.from(json["content"].map((x) => Content.fromJson(x))),
@@ -63,10 +67,15 @@ class News {
     "first": first,
     "empty": empty,
   };
+
+  @override
+  List<Object?> get props => [content, pageable, totalPages, totalElements,
+    last, size, number, sort, numberOfElements, first, empty];
 }
 
-class Content {
-  Content({
+
+class Content extends Equatable {
+  const Content({
     required this.id,
     required this.heading,
     required this.subHeading,
@@ -76,13 +85,13 @@ class Content {
     required this.insertDate,
   });
 
-  int id;
-  String heading;
-  String subHeading;
-  String content;
-  String image;
-  String author;
-  DateTime insertDate;
+  final int id;
+  final String heading;
+  final String subHeading;
+  final String content;
+  final String image;
+  final String author;
+  final DateTime insertDate;
 
   factory Content.fromJson(Map<String, dynamic> json) => Content(
     id: json["id"],
@@ -103,10 +112,13 @@ class Content {
     "author": author,
     "insertDate": insertDate.toIso8601String(),
   };
+
+  @override
+  List<Object?> get props => [id, heading, subHeading, content, image, author, insertDate];
 }
 
-class Pageable {
-  Pageable({
+class Pageable extends Equatable {
+  const Pageable({
     required this.sort,
     required this.offset,
     required this.pageNumber,
@@ -115,12 +127,12 @@ class Pageable {
     required this.unpaged,
   });
 
-  Sort sort;
-  int offset;
-  int pageNumber;
-  int pageSize;
-  bool paged;
-  bool unpaged;
+  final Sort sort;
+  final int offset;
+  final int pageNumber;
+  final int pageSize;
+  final bool paged;
+  final bool unpaged;
 
   factory Pageable.fromJson(Map<String, dynamic> json) => Pageable(
     sort: Sort.fromJson(json["sort"]),
@@ -139,18 +151,21 @@ class Pageable {
     "paged": paged,
     "unpaged": unpaged,
   };
+
+  @override
+  List<Object?> get props => [sort, offset, pageNumber, pageSize, paged, unpaged];
 }
 
-class Sort {
-  Sort({
+class Sort extends Equatable{
+  const Sort({
     required this.empty,
     required this.unsorted,
     required this.sorted,
   });
 
-  bool empty;
-  bool unsorted;
-  bool sorted;
+  final bool empty;
+  final bool unsorted;
+  final bool sorted;
 
   factory Sort.fromJson(Map<String, dynamic> json) => Sort(
     empty: json["empty"],
@@ -163,5 +178,8 @@ class Sort {
     "unsorted": unsorted,
     "sorted": sorted,
   };
+
+  @override
+  List<Object?> get props => [empty, unsorted, sorted];
 
 }

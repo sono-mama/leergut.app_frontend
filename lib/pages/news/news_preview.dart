@@ -2,8 +2,8 @@ import 'dart:typed_data';
 
 import 'package:flutter/cupertino.dart';
 
-import '../../utils/colors.dart';
-import '../../utils/dimensions.dart';
+import '../../utils/style/colors.dart';
+import '../../utils/style/dimensions.dart';
 import '../../widgets/big_text.dart';
 import '../../widgets/small_text.dart';
 

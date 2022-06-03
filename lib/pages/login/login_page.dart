@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:frontend/widgets/small_text.dart';
 
-import '../../utils/colors.dart';
-import '../../utils/dimensions.dart';
+import '../../utils/style/colors.dart';
+import '../../utils/style/dimensions.dart';
 import '../../widgets/big_text.dart';
 
 class LoginPage extends StatefulWidget {
@@ -23,10 +23,10 @@ class _LoginPageState extends State<LoginPage> {
           Align(
             alignment: Alignment.center,
             child: Container(
-              margin: EdgeInsets.only(top: 200),
+              margin: EdgeInsets.only(top: Dimensions.loginHeightMargin),
               height: 150,
               width: 150,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                   //border: Border.all(),
                   image: DecorationImage(
                       fit: BoxFit.contain,
@@ -44,14 +44,17 @@ class _LoginPageState extends State<LoginPage> {
                     BoxShadow(
                         blurRadius: 10,
                         spreadRadius: 7,
-                        offset: Offset(1, 1),
+                        offset: const Offset(1, 1),
                         color: Colors.grey.withOpacity(0.2))
                   ]),
-              margin: EdgeInsets.only(top: 50, left: 30, right: 30),
+              margin: EdgeInsets.only(
+                  top: Dimensions.heightMargin50,
+                  left: Dimensions.widthMargin30,
+                  right: Dimensions.widthMargin30),
               child: TextFormField(
                 cursorColor: AppColors.secondaryColor,
                 decoration: InputDecoration(
-                    hintText: "E-Mail-Adresse",
+                    hintText: "Benutzername",
                     enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(15),
                         borderSide:
@@ -75,7 +78,7 @@ class _LoginPageState extends State<LoginPage> {
                     BoxShadow(
                         blurRadius: 10,
                         spreadRadius: 7,
-                        offset: Offset(1, 1),
+                        offset: const Offset(1, 1),
                         color: Colors.grey.withOpacity(0.2))
                   ]),
               margin: EdgeInsets.only(top: Dimensions.heightMargin15, left: Dimensions.widthMargin30, right: Dimensions.widthMargin30),
@@ -102,7 +105,7 @@ class _LoginPageState extends State<LoginPage> {
             children: [
               Expanded(child: Container()),
               Container(
-                  margin: EdgeInsets.only(right: 30, top: 10),
+                  margin: const EdgeInsets.only(right: 30, top: 10),
                   child: SmallText(text: "Passwort vergessen?"))
             ],
           ),

@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:frontend/pages/home/home_page.dart';
 import 'package:frontend/pages/payout/payout_page.dart';
 
-import '../utils/colors.dart';
+import '../utils/style/colors.dart';
 
 class BottomNavBar extends StatefulWidget {
   const BottomNavBar({Key? key}) : super(key: key);

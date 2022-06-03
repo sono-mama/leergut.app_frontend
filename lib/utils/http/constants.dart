@@ -5,5 +5,8 @@ class ApiConstants {
 
   static String newsEndpoint = "/news";
   static String registerEndpoint = "/auth/register";
+  static String loginEndpoint = "/auth/login";
+
+  static String transactionEndpoint = "";
 
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:frontend/utils/dimensions.dart';
+import 'package:frontend/utils/style/dimensions.dart';
 
 class AppIcon extends StatelessWidget {
 

@@ -3,8 +3,8 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:frontend/pages/news/news_text.dart';
-import 'package:frontend/utils/colors.dart';
-import 'package:frontend/utils/dimensions.dart';
+import 'package:frontend/utils/style/colors.dart';
+import 'package:frontend/utils/style/dimensions.dart';
 import 'package:frontend/widgets/app_icon.dart';
 
 import '../../utils/http/api_service.dart';
