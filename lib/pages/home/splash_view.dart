@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 
 import '../../utils/auth/authentication_manager.dart';
 import '../../utils/auth/onboard.dart';
-import '../../utils/style/dimensions.dart';
 
 class SplashView extends StatelessWidget {
   final AuthenticationManager _authmanager = Get.put(AuthenticationManager());

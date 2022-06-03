@@ -47,8 +47,6 @@ void main() {
         };
         return Response(jsonEncode(response), 200);
       });
-      // Check whether getNumberTrivia function returns
-      // number trivia which will be a String
       expect(await ApiService().fetchNewsModel("/0/1", mockHTTPClient),
           isA<News>());
     });

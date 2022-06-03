@@ -9,6 +9,7 @@
 .buildlog/
 .history
 .svn/
+*.puml
 
 # IntelliJ related
 *.iml
@@ -118,8 +119,3 @@ app.*.symbols
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
 !/dev/ci/**/Gemfile.lock
 
-# IntelliJ related
-*.iml
-*.ipr
-*.iws
-.idea/

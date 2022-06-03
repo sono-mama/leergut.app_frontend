@@ -50,8 +50,6 @@ void main() {
         };
         return Response(jsonEncode(response), 200);
       });
-      // Check whether getNumberTrivia function returns
-      // number trivia which will be a String
       expect(await ApiService().fetchPastTransactions(mockHTTPClient, ["a","test"]),
           isA<PastTransactionModel>());
     });

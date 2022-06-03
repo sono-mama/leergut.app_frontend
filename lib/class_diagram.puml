@@ -1,0 +1,592 @@
+@startuml
+
+set namespaceSeparator ::
+
+class "frontend::utils::auth::authentication_manager.dart::AuthenticationManager" {
+  +RxBool isLogged
+  +void logOut()
+  +void login()
+  +void checkLoginStatus()
+}
+
+"frontend::utils::auth::authentication_manager.dart::AuthenticationManager" o-- "get::get_rx::src::rx_types::rx_types.dart::RxBool"
+"get::get_state_manager::src::simple::get_controllers.dart::GetxController" <|-- "frontend::utils::auth::authentication_manager.dart::AuthenticationManager"
+"frontend::utils::auth::cache_manager.dart::CacheManager" <|-- "frontend::utils::auth::authentication_manager.dart::AuthenticationManager"
+
+class "frontend::utils::auth::onboard.dart::OnBoard" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "frontend::utils::auth::onboard.dart::OnBoard"
+
+class "frontend::utils::auth::cache_manager.dart::CacheManagerKey" {
+  +int index
+  {static} +List<CacheManagerKey> values
+  {static} +CacheManagerKey TOKEN
+}
+
+"frontend::utils::auth::cache_manager.dart::CacheManagerKey" o-- "frontend::utils::auth::cache_manager.dart::CacheManagerKey"
+"dart::core::Enum" <|-- "frontend::utils::auth::cache_manager.dart::CacheManagerKey"
+
+abstract class "frontend::utils::auth::cache_manager.dart::CacheManager" {
+  +Future<bool> saveToken()
+  +String? getToken()
+  +Future<void> removeToken()
+}
+
+class "frontend::utils::style::colors.dart::AppColors" {
+  {static} +Color mainColor
+  {static} +Color secondaryColor
+  {static} +Color highlightColor
+  {static} +Color textColor
+  {static} +Color imageTextColor
+  {static} +Color textBackgroundColor
+}
+
+"frontend::utils::style::colors.dart::AppColors" o-- "dart::ui::Color"
+
+class "frontend::utils::style::dimensions.dart::Dimensions" {
+  {static} +double screenHeight
+  {static} +double screenWidth
+  {static} +double scalingFactor
+  {static} +double scalingFactorTextBox
+  {static} +double scalingFactorTextBoxTopMargin
+  {static} +double scalingFactorHomePageTextBoxTopMargin
+  {static} +double scalingFactorHeadlineTopMargin
+  {static} +double scalingFactorWidthMargin
+  {static} +double scalingFactorHeightMargin
+  {static} +double scalingFactorNewsImage
+  {static} +double scalingFactorNewsImageTextBox
+  {static} +double scalingFactorNewsImageTextBoxSizedBoxHeight
+  {static} +double scalingFactorMaxLinesNewsImageTextBox
+  {static} +double scalingFactorNewsDetailImageHeight
+  {static} +double scalingFactorNewsDetailIconHeightMargin
+  {static} +double scalingFactorNewsDetailIconSize
+  {static} +double scalingFactorNewsPreviewTextBoxWidth
+  {static} +double scalingFactorHeightMargin5
+  {static} +double scalingFactorHeightMargin15
+  {static} +double scalingFactorWidthMargin20
+  {static} +double scalingFactorHeightMargin20
+  {static} +double scalingFactorWidthMargin30
+  {static} +double scalingFactorHeightMargin50
+  {static} +double scalingFactorHeightMargin30
+  {static} +double scalingFactorSignUpTopMargin
+  {static} +double scalingFactorSignUpTextFieldHeight
+  {static} +double scalingFactorLoginButtonHeight
+  {static} +double scalingFactorLoginButtonWidth
+  {static} +double scalingFactorLoginHeightMargin
+  {static} +double scalingFactorDepositPreviewHeight
+  {static} +double scalingFactorDepositPreviewWidth
+  {static} +double pageViewContainer
+  {static} +double pageViewTextContainer
+  {static} +double pageViewTextContainerTopMargin
+  {static} +double homePageTextContainerTopMargin
+  {static} +double headlineTopMargin
+  {static} +double widthMargin
+  {static} +double heightMargin
+  {static} +double newsImageHeightWidth
+  {static} +double newsImageTextBoxHeight
+  {static} +double newsImageTextBoxSizedBoxHeight
+  {static} +int maxLinesNewsImageTextBox
+  {static} +double newsDetailImageHeight
+  {static} +double newsDetailIconHeightMargin
+  {static} +double newsDetailIconSize
+  {static} +double newsPreviewTextBoxWidth
+  {static} +double heightMargin5
+  {static} +double heightMargin15
+  {static} +double widthMargin20
+  {static} +double widthMargin30
+  {static} +double heightMargin20
+  {static} +double heightMargin30
+  {static} +double heightMargin50
+  {static} +double signUpPageTopMargin
+  {static} +double signUpPageTextFieldHeight
+  {static} +double loginButtonHeight
+  {static} +double loginButtonWidth
+  {static} +double loginHeightMargin
+  {static} +double depositPreviewHeight
+  {static} +double depositPreviewWidth
+}
+
+class "frontend::utils::http::transaction_response_model.dart::TransactionResponseModel" {
+  +String? status
+}
+
+class "frontend::utils::http::past_transaction_model.dart::PastTransactionModel" {
+  +int id
+  +String firstName
+  +String lastName
+  +String username
+  +String email
+  +String appUserRole
+  +List<Transaction> transactions
+  +Map<String, dynamic> toJson()
+}
+
+class "frontend::utils::http::past_transaction_model.dart::Transaction" {
+  +String id
+  +double amount
+  +String correspondingTransaction
+  +bool payedOut
+  +int sequenceNumber
+  +Map<String, dynamic> toJson()
+}
+
+class "frontend::utils::http::auth::login_view_model.dart::LoginViewModel" {
+  -LoginService _loginService
+  -AuthenticationManager _authManager
+  +void onInit()
+  +Future<void> loginUser()
+  +Future<void> registerUser()
+}
+
+"frontend::utils::http::auth::login_view_model.dart::LoginViewModel" o-- "frontend::utils::http::auth::login_service.dart::LoginService"
+"frontend::utils::http::auth::login_view_model.dart::LoginViewModel" o-- "frontend::utils::auth::authentication_manager.dart::AuthenticationManager"
+"get::get_state_manager::src::simple::get_controllers.dart::GetxController" <|-- "frontend::utils::http::auth::login_view_model.dart::LoginViewModel"
+
+class "frontend::utils::http::auth::register_response_model.dart::RegisterResponseModel" {
+  +String? status
+}
+
+class "frontend::utils::http::auth::login_service.dart::LoginService" {
+  +String loginUrl
+  +String registerUrl
+  +Future<LoginResponseModel?> fetchLogin()
+  +Future<RegisterResponseModel?> fetchRegister()
+}
+
+"get::get_connect::connect.dart::GetConnect" <|-- "frontend::utils::http::auth::login_service.dart::LoginService"
+
+class "frontend::utils::http::auth::login_response_model.dart::LoginResponseModel" {
+  +String? token
+}
+
+class "frontend::utils::http::auth::user_model.dart::UserModel" {
+  +int id
+  +String firstName
+  +String lastName
+  +String username
+  +String email
+  +String appUserRole
+  +Map<String, dynamic> toJson()
+}
+
+class "frontend::utils::http::auth::login_request_model.dart::LoginRequestModel" {
+  +String? username
+  +String? password
+  +Map<String, dynamic> toJson()
+}
+
+class "frontend::utils::http::auth::jwt_model.dart::JwtModel" {
+  +String? role
+  +String? sub
+  +int? iat
+  +int? exp
+}
+
+class "frontend::utils::http::auth::register_request_model.dart::RegisterRequestModel" {
+  +String? username
+  +String? email
+  +String? firstname
+  +String? lastname
+  +String? password
+  +Map<String, dynamic> toJson()
+}
+
+class "frontend::utils::http::auth::jwt_parser.dart::JwtParser" {
+  +Map<String, dynamic> parseJwt()
+  -String _decodeBase64()
+}
+
+class "frontend::utils::http::payout_response_model.dart::PayoutResponseModel" {
+  +String? status
+}
+
+class "frontend::utils::http::news_model.dart::News" {
+  +List<Content> content
+  +Pageable pageable
+  +int totalPages
+  +int totalElements
+  +bool last
+  +int size
+  +int number
+  +Sort sort
+  +int numberOfElements
+  +bool first
+  +bool empty
+  +Map<String, dynamic> toJson()
+}
+
+"frontend::utils::http::news_model.dart::News" o-- "frontend::utils::http::news_model.dart::Pageable"
+"frontend::utils::http::news_model.dart::News" o-- "frontend::utils::http::news_model.dart::Sort"
+
+class "frontend::utils::http::news_model.dart::Content" {
+  +int id
+  +String heading
+  +String subHeading
+  +String content
+  +String image
+  +String author
+  +DateTime insertDate
+  +Map<String, dynamic> toJson()
+}
+
+class "frontend::utils::http::news_model.dart::Pageable" {
+  +Sort sort
+  +int offset
+  +int pageNumber
+  +int pageSize
+  +bool paged
+  +bool unpaged
+  +Map<String, dynamic> toJson()
+}
+
+"frontend::utils::http::news_model.dart::Pageable" o-- "frontend::utils::http::news_model.dart::Sort"
+
+class "frontend::utils::http::news_model.dart::Sort" {
+  +bool empty
+  +bool unsorted
+  +bool sorted
+  +Map<String, dynamic> toJson()
+}
+
+class "frontend::utils::http::api_service.dart::ApiService" {
+  +Future<News> fetchNewsModel()
+  +Future<TransactionResponseModel> fetchTransaction()
+  +Future<UserModel> fetchUser()
+  +Future<PastTransactionModel> fetchPastTransactions()
+  +Future<PayoutResponseModel> fetchPayout()
+}
+
+"get::get_connect::connect.dart::GetConnect" <|-- "frontend::utils::http::api_service.dart::ApiService"
+"frontend::utils::auth::cache_manager.dart::CacheManager" <|-- "frontend::utils::http::api_service.dart::ApiService"
+
+class "frontend::utils::http::balance_calc.dart::BalanceCalc" {
+  +double balance
+  +double calculateBalance()
+}
+
+class "frontend::utils::http::constants.dart::ApiConstants" {
+  {static} +String baseUrl
+  {static} +String devUrl
+  {static} +String newsEndpoint
+  {static} +String registerEndpoint
+  {static} +String loginEndpoint
+  {static} +String transactionEndpoint
+}
+
+class "frontend::utils::http::transaction_model.dart::TransactionModel" {
+  +String? shopTransaction
+  +Map<String, dynamic> toJson()
+}
+
+class "frontend::main.dart::MyApp" {
+  +State<MyApp> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "frontend::main.dart::MyApp"
+
+class "frontend::main.dart::_MyAppState" {
+  -int _currentIndex
+  -List<dynamic> _children
+  +void onTabTapped()
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "frontend::main.dart::_MyAppState"
+
+class "frontend::pages::home::news_slider.dart::NewsSlider" {
+  +State<NewsSlider> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "frontend::pages::home::news_slider.dart::NewsSlider"
+
+class "frontend::pages::home::news_slider.dart::_NewsSliderState" {
+  +PageController pageController
+  -double _currPageValue
+  -double _scaleFactor
+  -double _totalHeight
+  -double _textBoxHeight
+  -int _numOfPages
+  +void initState()
+  +void dispose()
+  +Widget build()
+  -Widget _buildPageItem()
+}
+
+"frontend::pages::home::news_slider.dart::_NewsSliderState" o-- "flutter::src::widgets::page_view.dart::PageController"
+"flutter::src::widgets::framework.dart::State" <|-- "frontend::pages::home::news_slider.dart::_NewsSliderState"
+
+class "frontend::pages::home::base_page.dart::BasePage" {
+  +State<BasePage> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "frontend::pages::home::base_page.dart::BasePage"
+
+class "frontend::pages::home::base_page.dart::_BasePageState" {
+  -int _currentIndex
+  -List<dynamic> _children
+  +void onTabTapped()
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "frontend::pages::home::base_page.dart::_BasePageState"
+
+class "frontend::pages::home::home_page.dart::HomePage" {
+  +State<HomePage> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "frontend::pages::home::home_page.dart::HomePage"
+
+class "frontend::pages::home::home_page.dart::_HomePageState" {
+  +Future<UserModel>? futureUserModel
+  +Future<PastTransactionModel>? futurePastTransactionsModel
+  +void initState()
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "frontend::pages::home::home_page.dart::_HomePageState"
+
+class "frontend::pages::home::splash_view.dart::SplashView" {
+  -AuthenticationManager _authmanager
+  +Future<void> initializeSettings()
+  +Widget build()
+  +Scaffold errorView()
+  +Scaffold waitingView()
+}
+
+"frontend::pages::home::splash_view.dart::SplashView" o-- "frontend::utils::auth::authentication_manager.dart::AuthenticationManager"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "frontend::pages::home::splash_view.dart::SplashView"
+
+class "frontend::pages::qrcode::qrcode_page.dart::QrCodePage" {
+  +State<QrCodePage> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "frontend::pages::qrcode::qrcode_page.dart::QrCodePage"
+
+class "frontend::pages::qrcode::qrcode_page.dart::_QrCodePageState" {
+  -TransactionModel _transactionModel
+  +MobileScannerController cameraController
+  +Widget build()
+}
+
+"frontend::pages::qrcode::qrcode_page.dart::_QrCodePageState" o-- "frontend::utils::http::transaction_model.dart::TransactionModel"
+"frontend::pages::qrcode::qrcode_page.dart::_QrCodePageState" o-- "mobile_scanner::src::mobile_scanner_controller.dart::MobileScannerController"
+"flutter::src::widgets::framework.dart::State" <|-- "frontend::pages::qrcode::qrcode_page.dart::_QrCodePageState"
+
+class "frontend::pages::news::news_detail.dart::NewsDetailPage" {
+  +String subheading
+  +String heading
+  +String text
+  +Uint8List imageString
+  +State<NewsDetailPage> createState()
+}
+
+"frontend::pages::news::news_detail.dart::NewsDetailPage" o-- "dart::typed_data::Uint8List"
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "frontend::pages::news::news_detail.dart::NewsDetailPage"
+
+class "frontend::pages::news::news_detail.dart::_NewsDetailPageState" {
+  +void initState()
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "frontend::pages::news::news_detail.dart::_NewsDetailPageState"
+
+class "frontend::pages::news::news_preview.dart::NewsPreview" {
+  +String type
+  +String headline
+  +Uint8List imageString
+  +Widget build()
+}
+
+"frontend::pages::news::news_preview.dart::NewsPreview" o-- "dart::typed_data::Uint8List"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "frontend::pages::news::news_preview.dart::NewsPreview"
+
+class "frontend::pages::news::news_page.dart::NewsPage" {
+  +State<NewsPage> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "frontend::pages::news::news_page.dart::NewsPage"
+
+class "frontend::pages::news::news_page.dart::_NewsPageState" {
+  +Future<News>? futureNewsModel
+  -ScrollController _controller
+  +void initState()
+  +Widget build()
+}
+
+"frontend::pages::news::news_page.dart::_NewsPageState" o-- "flutter::src::widgets::scroll_controller.dart::ScrollController"
+"flutter::src::widgets::framework.dart::State" <|-- "frontend::pages::news::news_page.dart::_NewsPageState"
+
+class "frontend::pages::news::news_text.dart::NewsText" {
+  +String text
+  +State<NewsText> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "frontend::pages::news::news_text.dart::NewsText"
+
+class "frontend::pages::news::news_text.dart::_NewsTextState" {
+  +String firstHalf
+  +String secondHalf
+  +bool hiddenText
+  +double textHeight
+  +void initState()
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "frontend::pages::news::news_text.dart::_NewsTextState"
+
+class "frontend::pages::login::signup_page.dart::SignUpPage" {
+  +State<SignUpPage> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "frontend::pages::login::signup_page.dart::SignUpPage"
+
+class "frontend::pages::login::signup_page.dart::_SignUpPageState" {
+  +List<String> genderChoice
+  +String? value
+  +DateTime? dateTime
+  +DateFormat outputFormat
+  +TextEditingController dateCtl
+  +Widget build()
+  +DropdownMenuItem<String> buildMenuItem()
+  +dynamic datePicker()
+}
+
+"frontend::pages::login::signup_page.dart::_SignUpPageState" o-- "intl::src::intl::date_format.dart::DateFormat"
+"frontend::pages::login::signup_page.dart::_SignUpPageState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"flutter::src::widgets::framework.dart::State" <|-- "frontend::pages::login::signup_page.dart::_SignUpPageState"
+
+class "frontend::pages::login::login_register_page.dart::LoginRegisterPage" {
+  +State<LoginRegisterPage> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "frontend::pages::login::login_register_page.dart::LoginRegisterPage"
+
+class "frontend::pages::login::login_register_page.dart::_LoginRegisterPageState" {
+  +GlobalKey<FormState> formKey
+  -LoginViewModel _viewModel
+  +TextEditingController usernameCtr
+  +TextEditingController passwordCtr
+  +TextEditingController firstnameCtr
+  +TextEditingController lastnameCtr
+  +TextEditingController emailCtr
+  -FormType _formType
+  +Widget build()
+  +Form loginForm()
+  +Form registerForm()
+}
+
+"frontend::pages::login::login_register_page.dart::_LoginRegisterPageState" o-- "flutter::src::widgets::framework.dart::GlobalKey<FormState>"
+"frontend::pages::login::login_register_page.dart::_LoginRegisterPageState" o-- "frontend::utils::http::auth::login_view_model.dart::LoginViewModel"
+"frontend::pages::login::login_register_page.dart::_LoginRegisterPageState" o-- "flutter::src::widgets::editable_text.dart::TextEditingController"
+"frontend::pages::login::login_register_page.dart::_LoginRegisterPageState" o-- "frontend::pages::login::login_register_page.dart::FormType"
+"flutter::src::widgets::framework.dart::State" <|-- "frontend::pages::login::login_register_page.dart::_LoginRegisterPageState"
+
+class "frontend::pages::login::login_register_page.dart::FormType" {
+  +int index
+  {static} +List<FormType> values
+  {static} +FormType login
+  {static} +FormType register
+}
+
+"frontend::pages::login::login_register_page.dart::FormType" o-- "frontend::pages::login::login_register_page.dart::FormType"
+"dart::core::Enum" <|-- "frontend::pages::login::login_register_page.dart::FormType"
+
+class "frontend::pages::login::login_page.dart::LoginPage" {
+  +State<LoginPage> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "frontend::pages::login::login_page.dart::LoginPage"
+
+class "frontend::pages::login::login_page.dart::_LoginPageState" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "frontend::pages::login::login_page.dart::_LoginPageState"
+
+class "frontend::pages::payout::deposit_preview.dart::DepositPreview" {
+  +double amount
+  +bool payedOut
+  +State<DepositPreview> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "frontend::pages::payout::deposit_preview.dart::DepositPreview"
+
+class "frontend::pages::payout::deposit_preview.dart::_DepositPreviewState" {
+  +Widget build()
+}
+
+"flutter::src::widgets::framework.dart::State" <|-- "frontend::pages::payout::deposit_preview.dart::_DepositPreviewState"
+
+class "frontend::pages::payout::payout_page.dart::PayoutPage" {
+  +State<PayoutPage> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "frontend::pages::payout::payout_page.dart::PayoutPage"
+
+class "frontend::pages::payout::payout_page.dart::_PayoutPageState" {
+  +Future<PastTransactionModel>? futurePastTransactionsModel
+  -ScrollController _controller
+  +void initState()
+  +Widget build()
+  {static} -Route<void> _modalBuilder()
+}
+
+"frontend::pages::payout::payout_page.dart::_PayoutPageState" o-- "flutter::src::widgets::scroll_controller.dart::ScrollController"
+"flutter::src::widgets::framework.dart::State" <|-- "frontend::pages::payout::payout_page.dart::_PayoutPageState"
+
+class "frontend::widgets::big_text.dart::BigText" {
+  +Color? color
+  +String text
+  +double size
+  +TextOverflow overflow
+  +FontWeight fontWeight
+  +int maxLines
+  +Widget build()
+}
+
+"frontend::widgets::big_text.dart::BigText" o-- "dart::ui::Color"
+"frontend::widgets::big_text.dart::BigText" o-- "flutter::src::painting::text_painter.dart::TextOverflow"
+"frontend::widgets::big_text.dart::BigText" o-- "dart::ui::FontWeight"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "frontend::widgets::big_text.dart::BigText"
+
+class "frontend::widgets::app_icon.dart::AppIcon" {
+  +IconData icon
+  +Color backgroundColor
+  +Color iconColor
+  +double size
+  +Widget build()
+}
+
+"frontend::widgets::app_icon.dart::AppIcon" o-- "flutter::src::widgets::icon_data.dart::IconData"
+"frontend::widgets::app_icon.dart::AppIcon" o-- "dart::ui::Color"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "frontend::widgets::app_icon.dart::AppIcon"
+
+class "frontend::widgets::small_text.dart::SmallText" {
+  +Color? color
+  +String text
+  +double size
+  +double height
+  +Widget build()
+}
+
+"frontend::widgets::small_text.dart::SmallText" o-- "dart::ui::Color"
+"flutter::src::widgets::framework.dart::StatelessWidget" <|-- "frontend::widgets::small_text.dart::SmallText"
+
+class "frontend::widgets::bottom_navbar.dart::BottomNavBar" {
+  +State<BottomNavBar> createState()
+}
+
+"flutter::src::widgets::framework.dart::StatefulWidget" <|-- "frontend::widgets::bottom_navbar.dart::BottomNavBar"
+
+class "frontend::widgets::bottom_navbar.dart::_BottomNavBarState" {
+  -int _currentIndex
+  -List<dynamic> _children
+  +void onTabTapped()
+  +Widget build()
+}
+
+
+
+@enduml

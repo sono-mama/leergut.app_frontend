@@ -62,15 +62,13 @@ class ApiService extends GetConnect with CacheManager {
     String? token = tokenUser[0];
     String? user = tokenUser[1];
     Uri userUrl = Uri.parse(ApiConstants.devUrl + '/user/$user');
-    final response = await get(userUrl,
+    final response = await http.get(userUrl,
         headers: {
           'Content-Type':'application/json',
           'Authorization': 'Bearer $token',
         });
 
-
     if (response.statusCode == HttpStatus.ok) {
-      print(json.decode(response.body));
       return UserModel.fromJson(json.decode(response.body));
     } else {
       throw Exception('Failed to load');
@@ -88,7 +86,6 @@ class ApiService extends GetConnect with CacheManager {
         });
 
     if (response.statusCode == HttpStatus.ok) {
-      print(json.decode(response.body));
       return PastTransactionModel.fromJson(json.decode(response.body));
     } else {
       throw Exception('Failed to load');

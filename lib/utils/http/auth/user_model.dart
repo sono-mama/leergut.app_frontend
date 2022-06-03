@@ -7,7 +7,7 @@ UserModel userModelFromJson(String str) => UserModel.fromJson(json.decode(str));
 String pastTransactionModelToJson(UserModel data) => json.encode(data.toJson());
 
 class UserModel extends Equatable {
-  UserModel({
+  const UserModel({
     required this.id,
     required this.firstName,
     required this.lastName,
