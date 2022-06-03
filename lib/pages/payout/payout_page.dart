@@ -1,9 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/pages/payout/deposit_preview.dart';
-import 'package:frontend/utils/http/payout_response_model.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
+
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 
@@ -13,7 +13,6 @@ import '../../utils/http/past_transaction_model.dart';
 import '../../utils/style/colors.dart';
 import '../../utils/style/dimensions.dart';
 import '../../widgets/big_text.dart';
-import '../home/base_page.dart';
 
 
 class PayoutPage extends StatefulWidget {
@@ -30,7 +29,8 @@ class _PayoutPageState extends State<PayoutPage> {
   @override
   void initState() {
     super.initState();
-    futurePastTransactionsModel = ApiService().fetchPastTransactions(http.Client(), ApiService().getUser());
+    futurePastTransactionsModel = ApiService()
+        .fetchPastTransactions(http.Client(), ApiService().getUser());
   }
 
   @override
@@ -141,9 +141,10 @@ class _PayoutPageState extends State<PayoutPage> {
             CupertinoActionSheetAction(
               child: const Text('Alles auszahlen'),
               onPressed: () async {
-                final response = await ApiService().fetchPayout(true, ApiService().getUser());
+                final response = await ApiService()
+                    .fetchPayout(true, ApiService().getUser());
 
-                if (response.status.toString() == "successful") {
+                /*if (response.status.toString() == "successful") {
                   Get.defaultDialog(
                       title: ":)",
                       middleText: 'Guthaben ausgezahlt!',
@@ -175,16 +176,18 @@ class _PayoutPageState extends State<PayoutPage> {
                           }),
                         );
                       });
-                }
+                }*/ // TODO: Implement Popup, need to fix routing.
                 Navigator.pop(context);
               },
             ),
             CupertinoActionSheetAction(
-              child: const Text('Den letzten Pfandbon auszahlen'),
-              onPressed: () async {
-                final response = await ApiService().fetchPayout(false, ApiService().getUser());
+                child: const Text('Den letzten Pfandbon auszahlen'),
+                onPressed: () async {
+                  final response = await ApiService()
+                      .fetchPayout(false, ApiService().getUser());
 
-                if (response.status.toString() == "successful") {
+                  /*if (response.status.toString() == "successful") {
+                  Navigator.of(context, rootNavigator: true).pop("1");
                   Get.defaultDialog(
                       title: ":)",
                       middleText: 'Guthaben ausgezahlt!',
@@ -215,11 +218,9 @@ class _PayoutPageState extends State<PayoutPage> {
                             return const BasePage();
                           }),
                         );
-                      });
-                }
-                Navigator.pop(context);
-              },
-            ),
+                      });*/
+                  Navigator.pop(context);
+                }),
           ],
         );
       },
